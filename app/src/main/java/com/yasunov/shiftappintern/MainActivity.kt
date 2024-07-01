@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.yasunov.shiftappintern.ui.theme.Shapes
-import com.yasunov.shiftappintern.ui.theme.ShiftAppInternTheme
+import com.yasunov.designsystem.theme.Shapes
+import com.yasunov.designsystem.theme.ShiftAppInternTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

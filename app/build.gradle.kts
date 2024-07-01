@@ -1,8 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.jetbrains.kotlinx.serialization)
     alias(libs.plugins.compose.compiler)
+    id("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
+
 }
 
 android {
@@ -69,6 +71,9 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(project(":common"))
+    implementation(project(":network"))
+    implementation(project(":designsystem"))
     debugImplementation(libs.androidx.compose.ui.tooling)
 //    Tests
     testImplementation(libs.junit)
@@ -80,5 +85,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.kotlinx.coroutines.android)
-
+    implementation(libs.coil.kt)
+    implementation(libs.coil.kt.compose)
+    kapt (libs.hilt.android.compiler)
+    implementation (libs.hilt.android)
 }

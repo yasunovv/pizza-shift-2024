@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "ShiftAppIntern"
 include(":app")
 include(":network")
+include(":common")
+include(":designsystem")
