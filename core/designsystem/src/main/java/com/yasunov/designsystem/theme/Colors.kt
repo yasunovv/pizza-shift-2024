@@ -1,0 +1,16 @@
+package com.yasunov.designsystem.theme
+
+import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.toColorInt
+
+
+val PrimaryText = Color("#535353".toColorInt())
+val SecondaryText = Color("#344051".toColorInt())
+val QuarterlyText = Color("#97A1AF".toColorInt())
+val Orange = Color("#F4511E".toColorInt())
+val TertiaryText = Color("#637083".toColorInt())
+val TitleText = Color("#292929".toColorInt())
+val BodyPrimaryText = Color("#535353".toColorInt())
+val IconSecondary = Color("#A5A3A3".toColorInt())
+val White = Color("#ffffff".toColorInt())
+

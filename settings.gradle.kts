@@ -14,13 +14,17 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
+//        google()
         mavenCentral()
+        google()
     }
 }
 
 rootProject.name = "ShiftAppIntern"
 include(":app")
-include(":network")
-include(":common")
-include(":designsystem")
+include(":core:common")
+include(":core:network")
+include(":core:designsystem")
+include(":core:ui")
+include(":core:model")
+include(":feature:catalog")
