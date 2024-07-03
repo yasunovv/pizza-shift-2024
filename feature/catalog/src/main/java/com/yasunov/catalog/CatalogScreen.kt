@@ -20,10 +20,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.yasunov.catalog.model.PizzaCatalog
+import com.yasunov.catalog.ui.PizzaCatalogCard
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
-import com.yasunov.model.PizzaCatalog
-import com.yasunov.ui.PizzaCatalogCard
 
 
 @Composable

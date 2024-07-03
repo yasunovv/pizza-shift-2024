@@ -1,4 +1,4 @@
-package com.yasunov.model
+package com.yasunov.catalog.model
 
 data class PizzaCatalog (
     val id: Int = -1,

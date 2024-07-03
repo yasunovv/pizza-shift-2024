@@ -1,4 +1,4 @@
-package com.yasunov.ui
+package com.yasunov.catalog.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,9 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.yasunov.catalog.model.PizzaCatalog
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
-import com.yasunov.model.PizzaCatalog
 
 @Composable
 fun PizzaCatalogCard(

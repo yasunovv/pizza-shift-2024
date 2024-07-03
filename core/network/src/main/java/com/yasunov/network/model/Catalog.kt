@@ -11,7 +11,7 @@ data class Catalog(
     @SerialName("description") val description: String,
     @SerialName("doughs") val doughs: List<Dough>,
     @SerialName("id") val id: String,
-    @SerialName("img") val img: String,
+    @SerialName("img") val imgSrc: String,
     @SerialName("ingredients") val ingredients: List<Ingredient>,
     @SerialName("isGlutenFree") val isGlutenFree: Boolean,
     @SerialName("isHit") val isHit: Boolean,
