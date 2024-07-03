@@ -21,6 +21,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -39,7 +40,6 @@ import com.yasunov.designsystem.theme.White
 
 @Composable
 fun PizzaCardScreen(
-
     onBackIconClicked: () -> Unit = {},
     onButtonNextClicked: (Int) -> Unit = {},
     modifier: Modifier = Modifier,
@@ -86,17 +86,25 @@ fun PizzaCardScreen(
         ) {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(24.dp),
+                modifier = modifier.padding(horizontal = 16.dp)
             ) {
                 item {
                     Spacer(Modifier.padding(0.dp))
                 }
                 item {
-                    AsyncImage(
-                        model = pizzaCard.imageSrc,
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = modifier.size(220.dp)
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = modifier.fillMaxWidth()
+
+                    ) {
+                        val model = pizzaCard.imageSrc
+                        AsyncImage(
+                            model = model,
+                            contentDescription = null,
+                            contentScale = ContentScale.FillBounds,
+                            modifier = modifier.size(220.dp),
+                        )
+                    }
                 }
                 item {
                     Text(
@@ -106,7 +114,7 @@ fun PizzaCardScreen(
                     )
                     Spacer(modifier.height(8.dp))
                     Text(
-                        pizzaCard.ingredients.joinToString { ", " },
+                        pizzaCard.ingredients.toString().removePrefix("[").removeSuffix("]"),
                         style = Typography.body1,
                         color = ShiftAppInternTheme.colors.bodyPrimaryText
                     )
@@ -164,8 +172,8 @@ fun PizzaCardScreenPreview() {
 private val pizzaCard: PizzaCard = PizzaCard(
     id = 1,
     name = "Двойной цепленок",
-    ingredients = "Цыпленок, моцарелла, фирменный, соус альфредо".split(","),
+    ingredients = listOf("Цыпленок", "моцарелла", "фирменный", "соус альфредо"),
     sizes = listOf("Маленькая", "Средняя", "Большая"),
     imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
 
-)
+    )
