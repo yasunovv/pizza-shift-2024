@@ -1,6 +1,6 @@
 package com.yasunov.model
 
-data class IngredientCardModel (
+data class IngredientCard (
     val id: Int,
     val price: Int,
     val name: String,

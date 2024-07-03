@@ -34,11 +34,11 @@ import com.yasunov.designsystem.component.IngredientCard
 import com.yasunov.designsystem.component.PizzaTab
 import com.yasunov.designsystem.component.ShiftButton
 import com.yasunov.designsystem.icon.AppIconsResource
+import com.yasunov.designsystem.model.IngredientCardModel
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
 import com.yasunov.designsystem.theme.White
 import com.yasunov.designsystem.util.gridItems
-import com.yasunov.model.IngredientCardModel
 
 
 @Composable

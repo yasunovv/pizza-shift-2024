@@ -1,7 +1,7 @@
 package com.yasunov.network
 
 import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
-import com.yasunov.network.model.Pizza
+import com.yasunov.network.model.PizzaDTO
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -18,7 +18,7 @@ private const val BASE_URL = "https://shift-backend.onrender.com"
 
 interface PizzaApi {
     @GET("/catalog")
-    suspend fun getCatalog(): Result<Pizza>
+    suspend fun getCatalog(): Result<PizzaDTO>
 }
 
 private val okHttpClient: OkHttpClient = OkHttpClient.Builder()

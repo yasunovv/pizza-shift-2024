@@ -17,13 +17,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.yasunov.catalog.model.PizzaCatalog
+import com.yasunov.catalog.model.PizzaItemModel
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
 
 @Composable
-fun PizzaCatalogCard(
-    pizzaCard: PizzaCatalog,
+fun PizzaItem(
+    pizzaCard: PizzaItemModel,
     onClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -72,8 +72,8 @@ fun PizzaCatalogCard(
 @Composable
 private fun BookmarkButtonPreview() {
     ShiftAppInternTheme {
-        PizzaCatalogCard(
-            PizzaCatalog(
+        PizzaItem(
+            PizzaItemModel(
                 imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
                 name = "ШИФТ Суприм",
                 description = "Шифт пицца с пепперони, колбасой, зеленым перцем, луком, оливками и шампиньонами",

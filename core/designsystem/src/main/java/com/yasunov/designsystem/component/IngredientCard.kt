@@ -22,10 +22,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.yasunov.designsystem.model.IngredientCardModel
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.ShiftAppInternTheme.colors
 import com.yasunov.designsystem.theme.Typography
-import com.yasunov.model.IngredientCardModel
 
 @Composable
 fun IngredientCard(
@@ -87,7 +87,7 @@ private fun IngredientCardPreview() {
 }
 
 
-private val ingredientCardObjList = List<IngredientCardModel>(100) { id ->
+private val ingredientCardObjList = List(100) { id ->
     IngredientCardModel(
         id = id,
         price = 179,
