@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(project(":feature:catalog"))
+    implementation(project(":feature:pizzacard"))
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 //    Tests
@@ -92,6 +93,4 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:network"))
     implementation(project(":core:designsystem"))
-    implementation(project(":core:model"))
-    implementation(project(":core:ui"))
 }

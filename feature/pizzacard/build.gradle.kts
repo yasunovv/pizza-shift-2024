@@ -2,16 +2,16 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.jetbrains.kotlinx.serialization)
 }
 
 android {
-    namespace = "com.yasunov.ui"
+    namespace = "com.yasunov.pizzacard"
     compileSdk = 34
 
     defaultConfig {
         minSdk = 24
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -34,25 +34,26 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:model"))
-    implementation(project(":core:designsystem"))
-
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics.android)
     implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.android)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.ui.tooling.preview.android)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.foundation.layout)
     implementation(libs.androidx.compose.ui.util)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    debugImplementation(libs.androidx.ui.tooling)
+    implementation (libs.converter.kotlinx.serialization)
 // Coil
     implementation(libs.coil.kt.compose)
     implementation(libs.coil.kt)
+    implementation(project(":core:designsystem"))
+    implementation(project(":core:model"))
 }

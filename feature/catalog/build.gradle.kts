@@ -52,8 +52,9 @@ dependencies {
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation (libs.converter.kotlinx.serialization)
-
-    implementation(project(":core:ui"))
+// Coil
+    implementation(libs.coil.kt.compose)
+    implementation(libs.coil.kt)
     implementation(project(":core:designsystem"))
     implementation(project(":core:model"))
 }

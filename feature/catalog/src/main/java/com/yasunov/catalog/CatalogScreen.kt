@@ -1,7 +1,6 @@
 package com.yasunov.catalog
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -20,12 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.yasunov.catalog.model.PizzaItemModel
+import com.yasunov.catalog.ui.PizzaItem
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
-import com.yasunov.model.PizzaCatalog
-import com.yasunov.ui.PizzaCatalogCard
 
-
+private const val BOTTOM_BAR_PADDING = 56
 @Composable
 fun CatalogScreen(
     modifier: Modifier = Modifier,
@@ -37,8 +36,7 @@ fun CatalogScreen(
         drawerScrimColor = ShiftAppInternTheme.colors.uiBackground,
         backgroundColor = ShiftAppInternTheme.colors.uiBackground,
         contentColor = ShiftAppInternTheme.colors.uiBackground,
-//        Учитывем bottom bar
-        contentWindowInsets = WindowInsets(0, 56, 0, 56),
+        contentWindowInsets = WindowInsets(left = 0, top = 56, right = 0, bottom = BOTTOM_BAR_PADDING),
         topBar = {
             TopAppBar(
                 backgroundColor = ShiftAppInternTheme.colors.uiBackground,
@@ -51,8 +49,9 @@ fun CatalogScreen(
             }
         }
     ) { padding ->
-        Column(
-            Modifier
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(24.dp),
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
                 .consumeWindowInsets(padding)
@@ -62,61 +61,56 @@ fun CatalogScreen(
                     ),
                 ),
         ) {
-
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(24.dp),
-            ) {
-                item {
-                    Spacer(Modifier.padding(0.dp))
-                }
-                items(items = catalog, key = { it.id }) {
-                    PizzaCatalogCard(it, navigateOnClick)
-                }
-
+            item {
+                Spacer(Modifier.padding(0.dp))
             }
+            items(items = catalog, key = { it.id }) {
+                PizzaItem(it, navigateOnClick)
+            }
+
         }
     }
 
 }
 
 
-private val catalog: List<PizzaCatalog> = listOf(
-    PizzaCatalog(
+private val catalog: List<PizzaItemModel> = listOf(
+    PizzaItemModel(
         id = 1,
         imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
         name = "ШИФТ Суприм",
         description = "Шифт пицца с пепперони, колбасой, зеленым перцем, луком, оливками и шампиньонами.",
         price = 3400
     ),
-    PizzaCatalog(
+    PizzaItemModel(
         id = 2,
         imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
         name = "ШИФТ Суприм",
         description = "Шифт пицца с пепперони, колбасой, зеленым перцем, луком, оливками и шампиньонами.",
         price = 3400
     ),
-    PizzaCatalog(
+    PizzaItemModel(
         id = 3,
         imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
         name = "ШИФТ Суприм",
         description = "Шифт пицца с пепперони, колбасой, зеленым перцем, луком, оливками и шампиньонами.",
         price = 3400
     ),
-    PizzaCatalog(
+    PizzaItemModel(
         id = 4,
         imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
         name = "ШИФТ Суприм",
         description = "Шифт пицца с пепперони, колбасой, зеленым перцем, луком, оливками и шампиньонами.",
         price = 3400
     ),
-    PizzaCatalog(
+    PizzaItemModel(
         id = 5,
         imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
         name = "ШИФТ Суприм",
         description = "Шифт пицца с пепперони, колбасой, зеленым перцем, луком, оливками и шампиньонами.",
         price = 3400
     ),
-    PizzaCatalog(
+    PizzaItemModel(
         id = 6,
         imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
         name = "ШИФТ Суприм",

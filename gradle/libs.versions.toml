@@ -6,18 +6,15 @@ coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-landscapistCoil = "2.2.12"
-landscapistPlaceholder = "2.2.12"
 lifecycleRuntimeKtx = "2.8.3"
 activityCompose = "1.9.0"
 composeBom = "2024.06.00"
 coroutines-core = "1.8.1"
 kotlinx-coroutines = "1.8.1"
-kotlinx-serialization-json = "1.7.0"
+kotlinx-serialization-json = "1.7.1"
 retrofit = "2.11.0"
 retrofitAdaptersResult = "1.0.11"
 annotation = "1.8.0"
-androidx-navigation = "2.7.7"
 jetbrainsKotlinJvm = "2.0.0"
 googleDevtoolsKsp = "2.0.0-1.0.21"
 appcompat = "1.7.0"
@@ -60,10 +57,8 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
-kotlinx-serialiaztion-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.7.1" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.8.1" }
-landscapist-coil = { module = "com.github.skydoves:landscapist-coil", version.ref = "landscapistCoil" }
-landscapist-placeholder = { module = "com.github.skydoves:landscapist-placeholder", version.ref = "landscapistPlaceholder" }
+kotlinx-serialiaztion-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "coroutines-core" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
 retrofit-adapters-result = { module = "com.github.skydoves:retrofit-adapters-result", version.ref = "retrofitAdaptersResult" }

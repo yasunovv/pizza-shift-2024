@@ -1,6 +1,9 @@
-package com.yasunov.model
+package com.yasunov.catalog.model
 
-data class PizzaCatalog (
+import androidx.compose.runtime.Immutable
+
+@Immutable
+data class PizzaItemModel (
     val id: Int = -1,
     val imageSrc: String,
     val name: String,
