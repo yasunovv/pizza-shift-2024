@@ -15,9 +15,9 @@ import com.yasunov.designsystem.theme.Typography
 @Composable
 fun ShiftButton(
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     enabled: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(horizontal = 32.dp, 16.dp),
-    modifier: Modifier = Modifier,
     content: @Composable RowScope.() -> Unit,
 ) {
     Button(
