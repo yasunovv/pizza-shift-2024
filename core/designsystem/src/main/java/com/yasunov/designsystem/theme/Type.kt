@@ -89,14 +89,14 @@ val Typography = Typography(
         fontSize = 14.sp,
         fontWeight = FontWeight.SemiBold,
         lineHeight = 16.sp,
-        letterSpacing = 1.25.sp
+        letterSpacing = 0.15.sp
     ),
     caption = TextStyle(
         fontFamily = Inter,
         fontSize = 12.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = 16.sp,
-        letterSpacing = 0.4.sp
+        letterSpacing = 0.15.sp
     ),
     overline = TextStyle(
         fontFamily = Inter,
