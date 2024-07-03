@@ -79,9 +79,9 @@ val Typography = Typography(
     ),
     body2 = TextStyle(
         fontFamily = Inter,
-        fontSize = 12.sp,
+        fontSize = 14.sp,
         fontWeight = FontWeight.Normal,
-        lineHeight = 16.sp,
+        lineHeight = 20.sp,
         letterSpacing = 0.25.sp
     ),
     button = TextStyle(

@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.yasunov.catalog.model.PizzaCard
+import com.yasunov.designsystem.component.PizzaTab
 import com.yasunov.designsystem.icon.AppIconsResource
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
@@ -108,6 +109,9 @@ fun PizzaCardScreen(
 
 
                 }
+                item {
+                    PizzaTab(pizzaCard.sizes)
+                }
 //                items(items = catalog, key = { it.id }) {
 //                    PizzaCatalogCard(it, navigateOnClick)
 //                }
@@ -119,7 +123,7 @@ fun PizzaCardScreen(
 }
 
 
-private val catalog: PizzaCard = PizzaCard(
+private val pizzaCard: PizzaCard = PizzaCard(
     name = "Laurie McKay",
     ingredients = listOf(),
     sizes = listOf(),

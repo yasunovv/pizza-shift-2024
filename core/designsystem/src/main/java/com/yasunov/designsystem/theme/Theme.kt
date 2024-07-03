@@ -20,7 +20,8 @@ private val LightColorPalette = ShiftAppInternColors(
     appBarText = PrimaryText,
     secondaryText = SecondaryText,
     quarterlyText = QuarterlyText,
-    light = Light
+    light = Light,
+    secondary = Secondary
 )
 
 private val DarkColorPalette = LightColorPalette.copy()
@@ -60,7 +61,8 @@ data class ShiftAppInternColors(
     val appBarText: Color,
     val secondaryText: Color,
     val quarterlyText: Color,
-    val light: Color
+    val light: Color,
+    val secondary: Color
 ) {
 
 }

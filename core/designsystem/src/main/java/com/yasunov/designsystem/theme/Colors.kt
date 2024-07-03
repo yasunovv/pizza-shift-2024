@@ -13,6 +13,7 @@ val TitleText = Color("#292929".toColorInt())
 val BodyPrimaryText = Color("#535353".toColorInt())
 val IconSecondary = Color("#A5A3A3".toColorInt())
 val White = Color("#ffffff".toColorInt())
-val Light = Color("##CED2DA".toColorInt())
+val Light = Color("#CED2DA".toColorInt())
+val Secondary = Color("#F3F4F6".toColorInt())
 
 
