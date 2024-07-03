@@ -21,6 +21,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.yasunov.catalog.CatalogDest
+import com.yasunov.catalog.CatalogScreen
+import com.yasunov.catalog.PizzaCardDest
+import com.yasunov.catalog.PizzaCardScreen
 import com.yasunov.designsystem.icon.AppIconsResource
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
@@ -76,9 +79,12 @@ fun ShiftApp(
         }
     ) { padding ->
         Column(modifier.padding(padding)) {
-            NavHost(navController = rememberNavController(), startDestination = CatalogDest) {
+            NavHost(navController = rememberNavController(), startDestination = PizzaCardDest) {
                 composable<CatalogDest> {
-                    com.yasunov.catalog.CatalogScreen()
+                    CatalogScreen()
+                }
+                composable<PizzaCardDest> {
+                    PizzaCardScreen()
                 }
             }
         }

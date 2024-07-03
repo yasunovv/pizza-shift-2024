@@ -8,4 +8,6 @@ data class PizzaCard(
     val ingredients: List<String>,
     val sizes: List<String>,
     val imageSrc: String,
-)
+    val id: Int,
+
+    )

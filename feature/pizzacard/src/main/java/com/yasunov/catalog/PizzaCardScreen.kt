@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
@@ -24,23 +25,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.yasunov.catalog.model.PizzaCard
 import com.yasunov.designsystem.component.PizzaTab
+import com.yasunov.designsystem.component.ShiftButton
 import com.yasunov.designsystem.icon.AppIconsResource
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
+import com.yasunov.designsystem.theme.White
 
 
 @Composable
 fun PizzaCardScreen(
+
+    onBackIconClicked: () -> Unit = {},
+    onButtonNextClicked: (Int) -> Unit = {},
     modifier: Modifier = Modifier,
-    navigateOnClick: (Int) -> Unit = {},
-    onBackIconClicked: () -> Unit,
-    pizzaCard: PizzaCard
 ) {
-//    val pizzaCard =
+    val pizzaCard = pizzaCard
     Scaffold(
         drawerBackgroundColor = ShiftAppInternTheme.colors.uiBackground,
         drawerContentColor = ShiftAppInternTheme.colors.uiBackground,
@@ -102,7 +106,7 @@ fun PizzaCardScreen(
                     )
                     Spacer(modifier.height(8.dp))
                     Text(
-                        pizzaCard.name,
+                        pizzaCard.ingredients.joinToString { ", " },
                         style = Typography.body1,
                         color = ShiftAppInternTheme.colors.bodyPrimaryText
                     )
@@ -111,6 +115,33 @@ fun PizzaCardScreen(
                 }
                 item {
                     PizzaTab(pizzaCard.sizes)
+                }
+                item {
+                    Text(
+                        "Добавить по вкусу",
+                        style = Typography.body1,
+                        color = ShiftAppInternTheme.colors.titleText
+                    )
+                    Spacer(modifier.height(16.dp))
+//// todo Сделать элемент карточки
+//                    LazyColumn {
+//
+//                    }
+                }
+                item {
+                    ShiftButton(
+                        onClick = {
+                            onButtonNextClicked(pizzaCard.id)
+                        },
+                        enabled = true,
+                        modifier = modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            "Добавить пиццу",
+                            style = Typography.body1,
+                            color = White
+                        )
+                    }
                 }
 //                items(items = catalog, key = { it.id }) {
 //                    PizzaCatalogCard(it, navigateOnClick)
@@ -122,10 +153,19 @@ fun PizzaCardScreen(
 
 }
 
+@Preview
+@Composable
+fun PizzaCardScreenPreview() {
+    ShiftAppInternTheme {
+        PizzaCardScreen()
+    }
+}
 
 private val pizzaCard: PizzaCard = PizzaCard(
-    name = "Laurie McKay",
-    ingredients = listOf(),
-    sizes = listOf(),
-    imageSrc = "docendi"
+    id = 1,
+    name = "Двойной цепленок",
+    ingredients = "Цыпленок, моцарелла, фирменный, соус альфредо".split(","),
+    sizes = listOf("Маленькая", "Средняя", "Большая"),
+    imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
+
 )
