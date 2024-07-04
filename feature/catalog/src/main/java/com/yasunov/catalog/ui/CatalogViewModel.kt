@@ -18,9 +18,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CatalogViewModel @Inject constructor(
-    repository: PizzaRepository,
+    private val repository: PizzaRepository,
     private val dispatchers: AppDispatchers
 ) : ViewModel() {
+
     private var _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
     val uiState: StateFlow<UiState>
         get() = _uiState.stateIn(
@@ -30,6 +31,10 @@ internal class CatalogViewModel @Inject constructor(
         )
 
     init {
+        loadPizza()
+    }
+
+    fun loadPizza() {
         viewModelScope.launch(dispatchers.default) {
             repository.getPizzaList()
                 .map { pizzaModelList ->
@@ -54,5 +59,7 @@ internal class CatalogViewModel @Inject constructor(
                 }
                 .runCatching { _uiState.update { UiState.Error } }
         }
+
     }
+
 }
