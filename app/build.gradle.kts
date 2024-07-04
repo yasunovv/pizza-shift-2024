@@ -89,7 +89,6 @@ dependencies {
     implementation(libs.coil.kt.compose)
     kapt (libs.hilt.android.compiler)
     implementation (libs.hilt.android)
-
     implementation(project(":core:common"))
     implementation(project(":core:network"))
     implementation(project(":core:designsystem"))

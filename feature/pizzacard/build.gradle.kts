@@ -60,6 +60,12 @@ dependencies {
     implementation (libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     kapt (libs.hilt.android.compiler)
+//    viewModel ktx
+//    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.fragment.ktx)
+
+
+
 //    Project
     implementation(project(":core:designsystem"))
     implementation(project(":core:model"))
