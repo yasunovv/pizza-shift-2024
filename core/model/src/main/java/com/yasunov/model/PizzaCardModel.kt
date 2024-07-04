@@ -1,10 +1,6 @@
-package com.yasunov.data.model
+package com.yasunov.model
 
-import com.yasunov.model.IngredientModel
-import com.yasunov.model.SizeModel
-import com.yasunov.model.ToppingModel
-
-data class PizzaExtendedModel(
+data class PizzaCardModel(
     val id: Int,
     val description: String,
     val img: String,

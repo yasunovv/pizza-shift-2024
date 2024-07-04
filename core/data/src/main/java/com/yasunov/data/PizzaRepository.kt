@@ -1,9 +1,9 @@
 package com.yasunov.data
 
 import com.yasunov.common.AppDispatchers
-import com.yasunov.data.model.PizzaExtendedModel
-import com.yasunov.data.util.asPizzaExtendedModel
+import com.yasunov.data.util.asPizzaCardModel
 import com.yasunov.data.util.asPizzaModel
+import com.yasunov.model.PizzaCardModel
 import com.yasunov.model.PizzaModel
 import com.yasunov.network.PizzaApi
 import kotlinx.coroutines.flow.Flow
@@ -22,9 +22,9 @@ class PizzaRepository @Inject constructor(
             .flowOn(dispatchers.io)
     }
 
-    fun getPizzaById(id: Int): Flow<PizzaExtendedModel?> {
+    fun getPizzaById(id: Int): Flow<PizzaCardModel?> {
         return flow {
-            emit((api.getCatalog().catalog.find { it.id.toInt() == id })?.asPizzaExtendedModel())
+            emit((api.getCatalog().catalog.find { it.id.toInt() == id })?.asPizzaCardModel())
         }
             .flowOn(dispatchers.io)
     }

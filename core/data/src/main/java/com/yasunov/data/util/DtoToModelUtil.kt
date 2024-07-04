@@ -1,13 +1,12 @@
 package com.yasunov.data.util
 
-import com.yasunov.data.model.PizzaExtendedModel
 import com.yasunov.model.IngredientModel
+import com.yasunov.model.PizzaCardModel
 import com.yasunov.model.PizzaModel
 import com.yasunov.model.SizeModel
 import com.yasunov.model.ToppingModel
 import com.yasunov.network.model.CatalogDTO
 import com.yasunov.network.model.IngredientDTO
-import com.yasunov.network.model.PizzaDTO
 import com.yasunov.network.model.SizeDTO
 import com.yasunov.network.model.ToppingDTO
 
@@ -15,8 +14,8 @@ fun CatalogDTO.asPizzaModel(): PizzaModel = PizzaModel(
     id = id.toInt(), imageSrc = img, name = name, desc = description, price = sizes[0].price
 )
 
-fun CatalogDTO.asPizzaExtendedModel(): PizzaExtendedModel {
-    return PizzaExtendedModel(
+fun CatalogDTO.asPizzaCardModel(): PizzaCardModel {
+    return PizzaCardModel(
         id = id.toInt(),
         description = description,
         img = img,

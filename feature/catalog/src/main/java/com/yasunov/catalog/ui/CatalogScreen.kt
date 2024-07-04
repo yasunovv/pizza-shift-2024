@@ -30,7 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.yasunov.catalog.model.PizzaItemModel
-import com.yasunov.catalog.model.UiState
+import com.yasunov.catalog.model.PizzaItemUiState
 import com.yasunov.designsystem.component.ShiftButton
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
@@ -69,14 +69,14 @@ fun CatalogScreen(
         val viewModel = hiltViewModel<CatalogViewModel>()
         val uiState by viewModel.uiState.collectAsState()
         when (val value = uiState) {
-            is UiState.Loading -> LoadingScreen()
+            is PizzaItemUiState.Loading -> LoadingScreen()
 
-            is UiState.Success -> SuccessScreen(
+            is PizzaItemUiState.Success -> SuccessScreen(
                 uiState = value,
                 navigateOnClick = navigateOnClick, padding = padding
             )
 
-            is UiState.Error -> ErrorScreen(viewModel = viewModel)
+            is PizzaItemUiState.Error -> ErrorScreen(viewModel = viewModel)
         }
     }
 
@@ -98,7 +98,7 @@ private fun ErrorScreen(
             color = ShiftAppInternTheme.colors.titleText
         )
         Spacer(modifier = modifier.height(8.dp))
-        ShiftButton(onClick = { viewModel.loadPizza() }) {
+        ShiftButton(onClick = { viewModel.loadPizzaItem() }) {
             Text(
                 text = "Повторить",
                 style = Typography.body1,
@@ -125,7 +125,7 @@ fun LoadingScreen(
 
 @Composable
 private fun SuccessScreen(
-    uiState: UiState.Success,
+    uiState: PizzaItemUiState.Success,
     navigateOnClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
     padding: PaddingValues = PaddingValues(0.dp),

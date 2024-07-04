@@ -4,9 +4,11 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 data class PizzaCard(
-    val name: String,
-    val ingredients: List<String>,
-    val sizes: List<String>,
-    val imageSrc: String,
     val id: Int,
-    )
+    val description: String,
+    val img: String,
+    val ingredients: List<Ingredient>,
+    val name: String,
+    val sizes: List<Size>,
+    val toppings: List<Topping>,
+)

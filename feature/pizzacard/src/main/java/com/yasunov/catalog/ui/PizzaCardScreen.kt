@@ -1,4 +1,4 @@
-package com.yasunov.catalog
+package com.yasunov.catalog.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

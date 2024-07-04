@@ -1,4 +1,4 @@
-package com.yasunov.catalog
+package com.yasunov.catalog.navigation
 
 import kotlinx.serialization.Serializable
 

@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.yasunov.catalog.PizzaCardDest
-import com.yasunov.catalog.PizzaCardScreen
+import com.yasunov.catalog.navigation.PizzaCardDest
+import com.yasunov.catalog.ui.PizzaCardScreen
 import com.yasunov.catalog.navigation.CatalogDest
 import com.yasunov.catalog.ui.CatalogScreen
 import com.yasunov.designsystem.theme.ShiftAppInternTheme

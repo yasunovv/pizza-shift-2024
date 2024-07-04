@@ -57,8 +57,6 @@ dependencies {
 // Coil
     implementation(libs.coil.kt.compose)
     implementation(libs.coil.kt)
-//    Java inject
-    implementation(libs.javax.inject)
 //    Hilt
     implementation (libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)

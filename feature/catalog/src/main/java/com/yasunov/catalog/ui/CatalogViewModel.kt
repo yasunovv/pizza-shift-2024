@@ -3,7 +3,7 @@ package com.yasunov.catalog.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yasunov.catalog.model.PizzaItemModel
-import com.yasunov.catalog.model.UiState
+import com.yasunov.catalog.model.PizzaItemUiState
 import com.yasunov.common.AppDispatchers
 import com.yasunov.data.PizzaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,19 +23,19 @@ internal class CatalogViewModel @Inject constructor(
     private val dispatchers: AppDispatchers
 ) : ViewModel() {
 
-    private var _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
-    val uiState: StateFlow<UiState>
+    private var _uiState: MutableStateFlow<PizzaItemUiState> = MutableStateFlow(PizzaItemUiState.Loading)
+    val uiState: StateFlow<PizzaItemUiState>
         get() = _uiState.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = UiState.Loading
+            initialValue = PizzaItemUiState.Loading
         )
 
     init {
-        loadPizza()
+        loadPizzaItem()
     }
 
-    fun loadPizza() {
+    fun loadPizzaItem() {
         viewModelScope.launch(dispatchers.default) {
             repository.getPizzaList()
                 .map { pizzaModelList ->
@@ -51,10 +51,10 @@ internal class CatalogViewModel @Inject constructor(
                     }
 
                 }
-                .catch { _uiState.update { UiState.Error } }
+                .catch { _uiState.update { PizzaItemUiState.Error } }
                 .collect { pizzaModelItem ->
                     _uiState.update {
-                        UiState.Success(
+                        PizzaItemUiState.Success(
                             pizzaModelItem
                         )
                     }
