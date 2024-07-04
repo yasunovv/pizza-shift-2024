@@ -18,7 +18,7 @@ private const val BASE_URL = "https://shift-backend.onrender.com"
 
 interface PizzaApi {
     @GET("/catalog")
-    suspend fun getCatalog(): Result<PizzaDTO>
+    suspend fun getCatalog(): PizzaDTO
 }
 
 private val okHttpClient: OkHttpClient = OkHttpClient.Builder()

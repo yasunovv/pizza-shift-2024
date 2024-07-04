@@ -40,4 +40,5 @@ dependencies {
     implementation(libs.javax.inject)
     implementation(project(":core:network"))
     implementation(project(":core:common"))
+    implementation(project(":core:model"))
 }
