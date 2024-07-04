@@ -1,4 +1,4 @@
-package com.yasunov.catalog
+package com.yasunov.catalog.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.yasunov.catalog.model.PizzaItemModel
-import com.yasunov.catalog.ui.PizzaItem
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
 

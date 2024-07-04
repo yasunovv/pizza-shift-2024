@@ -70,7 +70,7 @@ fun PizzaItem(
 
 @Preview
 @Composable
-private fun BookmarkButtonPreview() {
+private fun PizzaItemPreview() {
     ShiftAppInternTheme {
         PizzaItem(
             PizzaItemModel(
