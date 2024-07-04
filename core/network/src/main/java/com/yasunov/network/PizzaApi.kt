@@ -5,6 +5,7 @@ import com.yasunov.network.model.PizzaDTO
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.http.GET
@@ -14,16 +15,19 @@ import java.util.concurrent.TimeUnit
 * [API DOCUMENTATION] (https://shift-backend.onrender.com)
 * */
 private const val TIMEOUT = 1000L
-private const val BASE_URL = "https://shift-backend.onrender.com"
+// todo добавить в билд конфиг  https://shift-backend.onrender.com
+
+private const val BASE_URL = "https://shift-backend.onrender.com/pizza/"
 
 interface PizzaApi {
-    @GET("/catalog")
+    @GET("catalog")
     suspend fun getCatalog(): PizzaDTO
 }
 
 private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
     .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
     .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+    .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
     .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
     .build()
 

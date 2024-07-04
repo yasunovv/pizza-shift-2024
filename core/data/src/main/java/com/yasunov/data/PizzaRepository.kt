@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-public class PizzaRepository @Inject constructor(
+class PizzaRepository @Inject constructor(
     private val api: PizzaApi,
     private val dispatchers: AppDispatchers
 ) {
@@ -17,7 +17,7 @@ public class PizzaRepository @Inject constructor(
         return flow {
             emit(api.getCatalog().asPizzaModelList())
         }
-            .flowOn(dispatchers.io)
+            .flowOn(dispatchers.default)
     }
 
 }

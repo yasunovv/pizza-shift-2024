@@ -102,7 +102,7 @@ private fun ErrorScreen(
             Text(
                 text = "Повторить",
                 style = Typography.body1,
-                color = ShiftAppInternTheme.colors.light
+                color = Color.White
             )
         }
     }

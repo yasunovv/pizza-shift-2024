@@ -43,6 +43,7 @@ dependencies {
     // Network
     implementation(libs.retrofit)
     implementation(libs.retrofit.adapters.result)
+    debugImplementation(libs.logging.interceptor)
 //    KotlinX
     implementation (libs.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialiaztion.json)
@@ -53,5 +54,6 @@ dependencies {
     implementation(libs.coil.kt)
     implementation (libs.hilt.android)
     kapt (libs.hilt.android.compiler)
+
 
 }

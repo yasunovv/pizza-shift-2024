@@ -29,6 +29,21 @@ internal object NetworkModule {
     fun providePizzaApi(): PizzaApi {
         return pizzaApi
     }
+//    @Provides
+//    @Singleton
+//    fun provideInterceptor(): Interceptor {
+//        return Interceptor { chain ->
+//            val request: Request = chain.request()
+//
+//            LOGGER.info(
+//                "Intercepted headers: {} from URL: {}",
+//                request.headers(),
+//                request.url()
+//            )
+//
+//            chain.proceed(request)
+//        }
+//    }
 }
 
 
