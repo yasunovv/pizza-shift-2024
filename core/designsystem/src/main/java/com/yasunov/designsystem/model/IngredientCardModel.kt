@@ -1,6 +1,6 @@
 package com.yasunov.designsystem.model
 import androidx.compose.runtime.Immutable
-import com.yasunov.model.IngredientCard
+import com.yasunov.model.IngredientCardModel
 
 @Immutable
 data class IngredientCardModel(
@@ -10,5 +10,5 @@ data class IngredientCardModel(
     val imageSrc: String
 )
 
-fun IngredientCard.asIngredientCardModel(): IngredientCardModel =
+fun IngredientCardModel.asIngredientCardModel(): IngredientCardModel =
     IngredientCardModel(id = id, price = price, name = name, imageSrc = imageSrc)

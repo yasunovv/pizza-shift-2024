@@ -20,4 +20,11 @@ class PizzaRepository @Inject constructor(
             .flowOn(dispatchers.default)
     }
 
+    fun getPizzaById(id: Int): Flow<List<PizzaModel>> {
+        return flow {
+            emit(api.getCatalog().asPizzaModelList())
+        }
+            .flowOn(dispatchers.default)
+    }
+
 }

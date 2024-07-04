@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrains.kotlinx.serialization)
+    id ("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -54,6 +56,14 @@ dependencies {
 // Coil
     implementation(libs.coil.kt.compose)
     implementation(libs.coil.kt)
+//    Hilt
+    implementation (libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt (libs.hilt.android.compiler)
+//    Project
     implementation(project(":core:designsystem"))
     implementation(project(":core:model"))
+    implementation(project(":core:data"))
+    implementation(project(":core:data"))
+    implementation(project(":core:common"))
 }
