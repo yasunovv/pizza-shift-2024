@@ -3,6 +3,8 @@ import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
 }
 
 kotlin {
@@ -31,4 +33,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.core)
     api(libs.kotlinx.immutable)
+//    Hilt
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.android.compiler)
 }

@@ -2,6 +2,8 @@ package com.yasunov.network.di
 
 import android.content.Context
 import coil.ImageLoader
+import com.yasunov.network.PizzaApi
+import com.yasunov.network.pizzaApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,12 +17,18 @@ import javax.inject.Singleton
 internal object NetworkModule {
     @Provides
     @Singleton
-    fun imageLoader(
+    fun provideImageLoader(
         @ApplicationContext application: Context,
     ): ImageLoader =
         ImageLoader.Builder(application)
             .respectCacheHeaders(false)
             .build()
+
+    @Provides
+    @Singleton
+    fun providePizzaApi(): PizzaApi {
+        return pizzaApi
+    }
 }
 
 

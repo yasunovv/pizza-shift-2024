@@ -28,6 +28,7 @@ coil = "2.6.0"
 runtimeAndroid = "1.6.8"
 uiToolingPreviewAndroid = "1.6.8"
 uiAndroid = "1.6.8"
+javax-inject = "1"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 #dagger-android = { module = "com.google.dagger:dagger-android", version.ref = "daggerAndroid" }
@@ -73,6 +74,7 @@ coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "
 androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
 androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
+javax-inject = { module = "javax.inject:javax.inject", version.ref = "javax-inject" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
