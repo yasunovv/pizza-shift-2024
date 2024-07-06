@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
             }
 
         window.decorView.setOnApplyWindowInsetsListener { view, windowInsets ->
-            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+            windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
             view.onApplyWindowInsets(windowInsets)
         }
 

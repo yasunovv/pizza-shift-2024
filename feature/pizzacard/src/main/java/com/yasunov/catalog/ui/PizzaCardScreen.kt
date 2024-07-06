@@ -42,19 +42,21 @@ import com.yasunov.designsystem.component.ToppingCard
 import com.yasunov.designsystem.icon.AppIconsResource
 import com.yasunov.designsystem.screen.ErrorScreen
 import com.yasunov.designsystem.screen.LoadingScreen
+import com.yasunov.designsystem.theme.BOTTOM_BAR_PADDING
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
 import com.yasunov.designsystem.theme.White
 import com.yasunov.designsystem.util.gridItems
 import com.yasunov.pizzacard.R
-
+private const val MATERIAL_TOP_BAR = 24
 
 @Composable
 fun PizzaCardScreen(
+    id: Int,
     modifier: Modifier = Modifier,
     onBackIconClicked: () -> Unit = {},
     onButtonNextClicked: (Int) -> Unit = {},
-    onIngredientCardClicked: (Int) -> Unit = {},
+
 ) {
     Scaffold(
         drawerBackgroundColor = ShiftAppInternTheme.colors.uiBackground,
@@ -62,7 +64,7 @@ fun PizzaCardScreen(
         drawerScrimColor = ShiftAppInternTheme.colors.uiBackground,
         backgroundColor = ShiftAppInternTheme.colors.uiBackground,
         contentColor = ShiftAppInternTheme.colors.uiBackground,
-        contentWindowInsets = WindowInsets(0, 56, 0, 56),
+        contentWindowInsets = WindowInsets(0, MATERIAL_TOP_BAR, 0, BOTTOM_BAR_PADDING),
         topBar = {
             TopAppBar(
                 backgroundColor = ShiftAppInternTheme.colors.uiBackground,
@@ -85,7 +87,7 @@ fun PizzaCardScreen(
         }
     ) { paddingValues ->
         val viewModel = hiltViewModel<PizzaCardViewModel, PizzaCardViewModel.Factory>(
-            creationCallback = { factory -> factory.create(id = 1) }
+            creationCallback = { factory -> factory.create(id = id) }
         )
         val uiState by viewModel.uiState.collectAsState()
         when (val value = uiState) {

@@ -26,15 +26,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.yasunov.catalog.model.PizzaItemUiState
 import com.yasunov.designsystem.screen.ErrorScreen
 import com.yasunov.designsystem.screen.LoadingScreen
+import com.yasunov.designsystem.theme.BOTTOM_BAR_PADDING
+import com.yasunov.designsystem.theme.MATERIAL_TOP_BAR
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
-
-private const val BOTTOM_BAR_PADDING = 56
 
 @Composable
 fun CatalogScreen(
     modifier: Modifier = Modifier,
-    navigateOnClick: (Int) -> Unit = {}
+    navigateOnClick: (Int) -> Unit = {},
 ) {
     Scaffold(
         drawerBackgroundColor = ShiftAppInternTheme.colors.uiBackground,
@@ -44,7 +44,7 @@ fun CatalogScreen(
         contentColor = ShiftAppInternTheme.colors.uiBackground,
         contentWindowInsets = WindowInsets(
             left = 0,
-            top = 56,
+            top = MATERIAL_TOP_BAR,
             right = 0,
             bottom = BOTTOM_BAR_PADDING
         ),

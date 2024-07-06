@@ -13,7 +13,7 @@ import com.yasunov.network.model.ToppingDTO
 private const val BASE_URL = "https://shift-backend.onrender.com"
 
 fun CatalogDTO.asPizzaModel(): PizzaModel = PizzaModel(
-    id = id.toInt(), imageSrc = img, name = name, desc = description, price = sizes[0].price
+    id = id.toInt(), imageSrc = BASE_URL + img, name = name, desc = description, price = sizes[0].price
 )
 
 fun CatalogDTO.asPizzaCardModel(): PizzaCardModel {
