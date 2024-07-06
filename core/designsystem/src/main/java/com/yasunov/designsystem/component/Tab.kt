@@ -2,6 +2,7 @@ package com.yasunov.designsystem.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,8 +29,12 @@ import com.yasunov.designsystem.theme.ShiftAppInternTheme.colors
 import com.yasunov.designsystem.theme.Typography
 
 @Composable
-fun PizzaTab(tabTitles: List<String>, modifier: Modifier = Modifier) {
-    var selectedTabIndex by remember { mutableIntStateOf(0) }
+fun PizzaTab(
+    tabTitles: List<String>,
+    modifier: Modifier = Modifier,
+    onClickTabItem: (String) -> Unit = {},
+) {
+    var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
     TabRow(
         selectedTabIndex = selectedTabIndex,
@@ -46,8 +52,9 @@ fun PizzaTab(tabTitles: List<String>, modifier: Modifier = Modifier) {
             .padding(2.dp)
     ) {
         tabTitles.forEachIndexed { index, text ->
-            TabItem(text = text, selected = selectedTabIndex == index) {
+            TabItem(text = text, selected = selectedTabIndex == index) { text ->
                 selectedTabIndex = index
+                onClickTabItem(text)
             }
         }
     }
@@ -55,14 +62,17 @@ fun PizzaTab(tabTitles: List<String>, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun TabItem(text: String, selected: Boolean, onClick: () -> Unit) {
+private fun TabItem(text: String, selected: Boolean, onClick: (String) -> Unit) {
     Box(
         modifier = Modifier
             .background(
                 color = if (selected) colors.light else colors.secondary,
                 shape = RoundedCornerShape(14.dp)
             )
-            .clickable(onClick = onClick)
+            .clickable(
+                onClick = { onClick(text) },
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() })
             .padding(horizontal = 16.dp, vertical = 10.dp)
             .fillMaxSize(),
         contentAlignment = Alignment.Center

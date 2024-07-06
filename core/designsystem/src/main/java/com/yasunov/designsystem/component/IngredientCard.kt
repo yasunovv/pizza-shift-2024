@@ -1,5 +1,9 @@
 package com.yasunov.designsystem.component
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,12 +17,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.yasunov.designsystem.R
@@ -30,8 +40,15 @@ import com.yasunov.designsystem.theme.Typography
 @Composable
 fun ToppingCard(
     toppingCard: ToppingCardModel,
+    onClickCard: (ToppingCardModel, Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var isSelected by rememberSaveable { mutableStateOf(false) }
+    val borderStroke: Dp by animateDpAsState(
+        targetValue = if (isSelected) 2.dp else 0.dp,
+        label = ""
+    )
+    val price = toppingCard.price
     Card(
         shape = RoundedCornerShape(16.dp),
         backgroundColor = Color.White,
@@ -40,7 +57,13 @@ fun ToppingCard(
         elevation = 4.dp,
         modifier = modifier
             .fillMaxWidth()
-            .padding(4.dp)
+            .border(width = borderStroke, color = if (borderStroke == 0.dp) Color.White else colors.brand, shape = RoundedCornerShape(16.dp))
+            .clickable(interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = {
+                    isSelected = !isSelected
+                    onClickCard(toppingCard, isSelected)
+                }),
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -50,21 +73,23 @@ fun ToppingCard(
             AsyncImage(
                 model = imageSrc,
                 contentDescription = null,
-                modifier = modifier.size(88.dp)
+                modifier = Modifier.size(88.dp)
                     .padding(top = 8.dp)
             )
+            val name = toppingCard.name
             Text(
-                toppingCard.name,
+                name,
                 textAlign = TextAlign.Center,
-                style = Typography.caption, color = colors.titleText
-            )
+                style = Typography.caption, color = colors.titleText,
+                maxLines = 1,
+
+                )
             Text(
-                text = stringResource(R.string.price, toppingCard.price),
+                text = stringResource(R.string.price, price),
                 textAlign = TextAlign.Center,
                 style = Typography.button,
                 color = colors.titleText,
-                modifier = modifier.padding(bottom = 8.dp),
-                maxLines = 1
+                modifier = Modifier.padding(bottom = 8.dp)
             )
         }
     }
@@ -82,7 +107,10 @@ private fun IngredientCardPreview() {
         ) {
             items(
                 items = ingredientCardObjList, key = { it.id }) {
-                ToppingCard(it)
+                ToppingCard(
+                    toppingCard = it,
+                    onClickCard = { _, _ ->}
+                )
             }
         }
     }

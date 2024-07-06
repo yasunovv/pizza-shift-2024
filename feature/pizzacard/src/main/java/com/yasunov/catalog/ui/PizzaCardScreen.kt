@@ -1,6 +1,7 @@
 package com.yasunov.catalog.ui
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -23,11 +24,13 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,6 +46,7 @@ import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
 import com.yasunov.designsystem.theme.White
 import com.yasunov.designsystem.util.gridItems
+import com.yasunov.pizzacard.R
 
 
 @Composable
@@ -88,6 +92,7 @@ fun PizzaCardScreen(
             is PizzaCardUiState.Loading -> LoadingScreen(modifier = modifier.padding(paddingValues))
 
             is PizzaCardUiState.Success -> SuccessScreen(
+                viewModel = viewModel,
                 uiState = value,
                 padding = paddingValues
             )
@@ -104,6 +109,7 @@ fun PizzaCardScreen(
 
 @Composable
 private fun SuccessScreen(
+    viewModel: PizzaCardViewModel,
     uiState: PizzaCardUiState.Success,
     modifier: Modifier = Modifier,
     onButtonNextClicked: (Int) -> Unit = {},
@@ -160,7 +166,13 @@ private fun SuccessScreen(
         }
         item {
             val sizes = uiState.pizzaCard.sizes.map { it.name }
-            PizzaTab(sizes)
+            PizzaTab(
+                tabTitles = sizes, onClickTabItem = { viewModel.selectPizzaAndUpdateTotal(it) },
+                modifier = modifier.clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {})
+            )
         }
         item {
             Spacer(Modifier.height(24.dp))
@@ -180,9 +192,22 @@ private fun SuccessScreen(
 
         gridItems(toppingCardModelList, nColumns = 3) { item ->
             val ingredientCardId = item.id
+
             ToppingCard(
-                item,
-                modifier = modifier.clickable(onClick = { onIngredientCardClicked(ingredientCardId) })
+                toppingCard = item,
+                onClickCard = { toppingCard, isSelected ->
+                    viewModel.addTopping(
+                        toppingCard = toppingCard,
+                        isAdd = isSelected
+                    )
+                },
+                modifier = modifier
+                    .padding(4.dp)
+                    .clickable(interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = {
+                            onIngredientCardClicked(ingredientCardId)
+                        }),
             )
 
         }
@@ -200,7 +225,7 @@ private fun SuccessScreen(
                 modifier = modifier.fillMaxWidth()
             ) {
                 Text(
-                    "Добавить пиццу",
+                    text = stringResource(R.string.addPizzaToTrash, uiState.total),
                     style = Typography.body1,
                     color = White
                 )

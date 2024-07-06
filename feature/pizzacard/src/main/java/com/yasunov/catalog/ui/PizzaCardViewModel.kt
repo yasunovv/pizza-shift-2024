@@ -1,7 +1,6 @@
 package com.yasunov.catalog.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.yasunov.catalog.model.PizzaCard
 import com.yasunov.catalog.model.PizzaCardUiState
@@ -9,6 +8,7 @@ import com.yasunov.catalog.util.asIngredient
 import com.yasunov.catalog.util.asSize
 import com.yasunov.common.AppDispatchers
 import com.yasunov.data.PizzaRepository
+import com.yasunov.designsystem.model.ToppingCardModel
 import com.yasunov.designsystem.model.asToppingCardModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -38,6 +38,7 @@ class PizzaCardViewModel @AssistedInject constructor(
             initialValue = PizzaCardUiState.Loading
         )
 
+
     init {
         loadPizzaCard()
     }
@@ -66,30 +67,56 @@ class PizzaCardViewModel @AssistedInject constructor(
                 .collect { pizzaCard ->
                     _uiState.update {
                         PizzaCardUiState.Success(
-                            pizzaCard = pizzaCard
+                            pizzaCard = pizzaCard,
+                            sizePrice = pizzaCard.sizes[0].price,
+                            total = pizzaCard.sizes[0].price
                         )
                     }
                 }
+        }
+    }
+
+    fun selectPizzaAndUpdateTotal(size: String): Unit {
+        _uiState.update {
+            (it as PizzaCardUiState.Success).copy(sizePrice = findPriceByPizzaSize(size))
+        }
+        updateTotal()
+    }
+
+    private fun findPriceByPizzaSize(size: String): Int? {
+        (_uiState.value as PizzaCardUiState.Success).pizzaCard.sizes.forEach {
+            if (size == it.name) return it.price
+        }
+        return null
+    }
+
+    private fun updateTotal() {
+        _uiState.update {
+            (it as PizzaCardUiState.Success).copy(
+                total = (it.sizePrice ?: 0) +
+                        it.addedToppings.values.sum()
+            )
 
 
         }
+
+    }
+
+    fun addTopping(toppingCard: ToppingCardModel, isAdd: Boolean) {
+        _uiState.update { uiStateSuccess ->
+            uiStateSuccess as PizzaCardUiState.Success
+            val newMap = uiStateSuccess.addedToppings
+            if (isAdd) newMap[toppingCard.name] = toppingCard.price
+            else newMap[toppingCard.name] = 0
+            uiStateSuccess.copy(
+                addedToppings = newMap
+            )
+        }
+        updateTotal()
     }
 
     @AssistedFactory
     interface Factory {
         fun create(id: Int): PizzaCardViewModel
-    }
-
-    companion object {
-        fun provideFactory(
-            assistedFactory: Factory,
-            id: Int
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                @Suppress("UNCHECKED_CAST")
-                return assistedFactory.create(id = id) as T
-            }
-
-        }
     }
 }
