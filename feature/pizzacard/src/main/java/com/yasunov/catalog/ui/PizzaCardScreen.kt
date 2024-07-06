@@ -73,25 +73,29 @@ fun PizzaCardScreen(
                     modifier = modifier.size(24.dp)
                         .clickable { onBackIconClicked() }
                 )
-                Spacer(Modifier.padding(start = 32.dp))
-                Text("Пицца", style = Typography.h5, color = ShiftAppInternTheme.colors.titleText)
-                Spacer(Modifier.padding(end = 16.dp))
+                Text(
+                    "Пицца", style = Typography.h5, color = ShiftAppInternTheme.colors.titleText,
+                    modifier = modifier.padding(start = 32.dp, end = 16.dp)
+                )
             }
         }
-    ) { padding ->
+    ) { paddingValues ->
         val viewModel = hiltViewModel<PizzaCardViewModel, PizzaCardViewModel.Factory>(
             creationCallback = { factory -> factory.create(id = 1) }
         )
         val uiState by viewModel.uiState.collectAsState()
         when (val value = uiState) {
-            is PizzaCardUiState.Loading -> LoadingScreen()
+            is PizzaCardUiState.Loading -> LoadingScreen(modifier = modifier.padding(paddingValues))
 
             is PizzaCardUiState.Success -> SuccessScreen(
                 uiState = value,
-                padding = padding
+                padding = paddingValues
             )
 
-            is PizzaCardUiState.Error -> ErrorScreen(onClickButton = { viewModel.loadPizzaCard() })
+            is PizzaCardUiState.Error -> ErrorScreen(
+                onClickButton = { viewModel.loadPizzaCard() },
+                modifier = modifier.padding(paddingValues)
+            )
         }
 
 
@@ -135,21 +139,13 @@ private fun SuccessScreen(
                     modifier = modifier.size(220.dp),
                 )
             }
-        }
-        item {
             Spacer(Modifier.height(32.dp))
-        }
-        item {
             Text(
                 uiState.pizzaCard.name,
                 style = Typography.h5,
                 color = ShiftAppInternTheme.colors.titleText
             )
-        }
-        item {
             Spacer(Modifier.height(8.dp))
-        }
-        item {
 
             val ingredients =
                 uiState.pizzaCard.ingredients.joinToString(separator = ", ") { it.name }
