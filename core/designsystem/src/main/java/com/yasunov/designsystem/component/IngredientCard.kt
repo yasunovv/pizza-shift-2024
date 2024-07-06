@@ -22,14 +22,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.yasunov.designsystem.model.IngredientCardModel
+import com.yasunov.designsystem.model.ToppingCardModel
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.ShiftAppInternTheme.colors
 import com.yasunov.designsystem.theme.Typography
 
 @Composable
-fun IngredientCard(
-    ingredientCard: IngredientCardModel,
+fun ToppingCard(
+    toppingCard: ToppingCardModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -46,19 +46,19 @@ fun IngredientCard(
             .background(Color.White)
             .padding(8.dp)
     ) {
-        val imageSrc = ingredientCard.imageSrc
+        val imageSrc = toppingCard.imageSrc
         AsyncImage(
             model = imageSrc,
             contentDescription = null,
             modifier = modifier.size(88.dp)
         )
         Text(
-            ingredientCard.name,
+            toppingCard.name,
             textAlign = TextAlign.Center,
             style = Typography.caption, color = colors.titleText
         )
         Text(
-            "${ingredientCard.price} ₽",
+            "${toppingCard.price} ₽",
             textAlign = TextAlign.Center,
             style = Typography.button,
             color = colors.titleText
@@ -78,7 +78,7 @@ private fun IngredientCardPreview() {
         ) {
             items(
                 items = ingredientCardObjList, key = { it.id }) {
-                IngredientCard(it)
+                ToppingCard(it)
             }
 
 
@@ -88,7 +88,7 @@ private fun IngredientCardPreview() {
 
 
 private val ingredientCardObjList = List(100) { id ->
-    IngredientCardModel(
+    ToppingCardModel(
         id = id,
         price = 179,
         name = "Сырный бортик",

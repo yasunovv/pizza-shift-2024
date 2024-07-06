@@ -1,7 +1,7 @@
 package com.yasunov.model
 
 data class ToppingModel(
-    val cost: Int,
+    val price: Int,
     val img: String,
     val name: String
 )

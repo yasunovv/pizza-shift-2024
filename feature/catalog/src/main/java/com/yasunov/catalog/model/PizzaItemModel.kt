@@ -1,7 +1,7 @@
 package com.yasunov.catalog.model
 
 import kotlinx.serialization.Serializable
-
+ 
 @Serializable
 data class PizzaItemModel(
     val id: Int = -1,

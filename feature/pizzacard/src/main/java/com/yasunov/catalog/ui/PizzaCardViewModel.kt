@@ -7,9 +7,9 @@ import com.yasunov.catalog.model.PizzaCard
 import com.yasunov.catalog.model.PizzaCardUiState
 import com.yasunov.catalog.util.asIngredient
 import com.yasunov.catalog.util.asSize
-import com.yasunov.catalog.util.asTopping
 import com.yasunov.common.AppDispatchers
 import com.yasunov.data.PizzaRepository
+import com.yasunov.designsystem.model.asToppingCardModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -54,7 +54,11 @@ class PizzaCardViewModel @AssistedInject constructor(
                         ingredients = pizzaCardModel.ingredients.map { it.asIngredient() },
                         name = pizzaCardModel.name,
                         sizes = pizzaCardModel.sizes.map { it.asSize() },
-                        toppings = pizzaCardModel.toppings.map { it.asTopping() }
+                        toppings = pizzaCardModel.toppings.mapIndexed { index, item ->
+                            item.asToppingCardModel(
+                                index
+                            )
+                        }
 
                     )
                 }

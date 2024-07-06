@@ -33,11 +33,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.yasunov.catalog.model.PizzaCardUiState
-import com.yasunov.designsystem.component.IngredientCard
 import com.yasunov.designsystem.component.PizzaTab
 import com.yasunov.designsystem.component.ShiftButton
+import com.yasunov.designsystem.component.ToppingCard
 import com.yasunov.designsystem.icon.AppIconsResource
-import com.yasunov.designsystem.model.IngredientCardModel
 import com.yasunov.designsystem.screen.ErrorScreen
 import com.yasunov.designsystem.screen.LoadingScreen
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
@@ -181,17 +180,11 @@ private fun SuccessScreen(
         item {
             Spacer(Modifier.height(16.dp))
         }
-        val ingredientCardObjList = List(9) { id ->
-            IngredientCardModel(
-                id = id,
-                price = 79,
-                name = "Нежный цыпленок",
-                imageSrc = "https://shift-backend.onrender.com/static/images/ingredient/chicken_fillet.png"
-            )
-        }
-        gridItems(ingredientCardObjList, nColumns = 3) { item ->
+        val toppingCardModelList = uiState.pizzaCard.toppings
+
+        gridItems(toppingCardModelList, nColumns = 3) { item ->
             val ingredientCardId = item.id
-            IngredientCard(
+            ToppingCard(
                 item,
                 modifier = modifier.clickable(onClick = { onIngredientCardClicked(ingredientCardId) })
             )

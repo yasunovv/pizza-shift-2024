@@ -11,4 +11,4 @@ fun IngredientModel.asIngredient(): Ingredient = Ingredient(cost = cost, img = i
 
 fun SizeModel.asSize(): Size = Size(name = name, price = price)
 
-fun ToppingModel.asTopping(): Topping = Topping(cost = cost, img = img, name = name)
+fun ToppingModel.asTopping(id: Int): Topping = Topping(id = id, cost = price, img = img, name = name)
