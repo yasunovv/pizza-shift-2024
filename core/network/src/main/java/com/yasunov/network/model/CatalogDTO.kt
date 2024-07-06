@@ -10,7 +10,7 @@ data class CatalogDTO(
     val description: String,
     val doughs: List<DoughDTO>,
     val id: String,
-    val imgSrc: String,
+    val img: String,
     val ingredients: List<IngredientDTO>,
     val isGlutenFree: Boolean,
     val isHit: Boolean,

@@ -1,6 +1,8 @@
 [versions]
 agp = "8.5.0"
 daggerAndroid = "2.51.1"
+fragmentKtx = "1.8.1"
+hiltNavigationCompose = "1.2.0"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -12,6 +14,7 @@ composeBom = "2024.06.00"
 coroutines-core = "1.8.1"
 kotlinx-coroutines = "1.8.1"
 kotlinx-serialization-json = "1.7.1"
+loggingInterceptor = "4.12.0"
 retrofit = "2.11.0"
 retrofitAdaptersResult = "1.0.11"
 annotation = "1.8.0"
@@ -28,9 +31,13 @@ coil = "2.6.0"
 runtimeAndroid = "1.6.8"
 uiToolingPreviewAndroid = "1.6.8"
 uiAndroid = "1.6.8"
+javax-inject = "1"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 #dagger-android = { module = "com.google.dagger:dagger-android", version.ref = "daggerAndroid" }
+androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
 hilt-android = {module = "com.google.dagger:hilt-android", version.ref = "daggerAndroid"}
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "daggerAndroid" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "daggerAndroid" }
@@ -59,6 +66,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-serialiaztion-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "coroutines-core" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
 retrofit-adapters-result = { module = "com.github.skydoves:retrofit-adapters-result", version.ref = "retrofitAdaptersResult" }
@@ -73,6 +81,8 @@ coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "
 androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
 androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "uiToolingPreviewAndroid" }
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
+
+javax-inject = { module = "javax.inject:javax.inject", version.ref = "javax-inject" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

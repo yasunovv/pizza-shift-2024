@@ -1,15 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.jetbrains.kotlinx.serialization)
-    id("kotlin-kapt")
-    id ("dagger.hilt.android.plugin")
-
-
 }
 
 android {
-    namespace = "com.yasunov.network2"
+    namespace = "com.yasunov.data"
     compileSdk = 34
 
     defaultConfig {
@@ -18,7 +13,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
-
 
     buildTypes {
         release {
@@ -39,21 +33,12 @@ android {
 }
 
 dependencies {
-    implementation(libs.material)
-    // Network
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.adapters.result)
-    debugImplementation(libs.logging.interceptor)
-//    KotlinX
-    implementation (libs.converter.kotlinx.serialization)
-    implementation(libs.kotlinx.serialiaztion.json)
-    //    Coroutines
-    implementation(libs.kotlinx.coroutines.core)
-//    Annotations
-    implementation(libs.androidx.annotation)
-    implementation(libs.coil.kt)
-    implementation (libs.hilt.android)
-    kapt (libs.hilt.android.compiler)
 
+    implementation(libs.androidx.core.ktx)
 
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.javax.inject)
+    implementation(project(":core:network"))
+    implementation(project(":core:common"))
+    implementation(project(":core:model"))
 }
