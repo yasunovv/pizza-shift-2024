@@ -1,5 +1,7 @@
 package com.yasunov.catalog.ui
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
@@ -17,14 +19,20 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -44,10 +53,12 @@ import com.yasunov.designsystem.screen.ErrorScreen
 import com.yasunov.designsystem.screen.LoadingScreen
 import com.yasunov.designsystem.theme.BOTTOM_BAR_PADDING
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
+import com.yasunov.designsystem.theme.ShiftAppInternTheme.colors
 import com.yasunov.designsystem.theme.Typography
 import com.yasunov.designsystem.theme.White
 import com.yasunov.designsystem.util.gridItems
 import com.yasunov.pizzacard.R
+
 private const val MATERIAL_TOP_BAR = 24
 
 @Composable
@@ -80,7 +91,7 @@ fun PizzaCardScreen(
                         .clickable { onBackIconClicked() }
                 )
                 Text(
-                    "Пицца", style = Typography.h5, color = ShiftAppInternTheme.colors.titleText,
+                    "Пицца", style = Typography.h5, color = colors.titleText,
                     modifier = modifier.padding(start = 32.dp, end = 16.dp)
                 )
             }
@@ -89,6 +100,10 @@ fun PizzaCardScreen(
         val viewModel = hiltViewModel<PizzaCardViewModel, PizzaCardViewModel.Factory>(
             creationCallback = { factory -> factory.create(id = id) }
         )
+        DisposableEffect(Unit) {
+            viewModel.loadPizzaCard()
+            onDispose { }
+        }
         val uiState by viewModel.uiState.collectAsState()
         when (val value = uiState) {
             is PizzaCardUiState.Loading -> LoadingScreen(modifier = modifier.padding(paddingValues))
@@ -114,7 +129,7 @@ private fun SuccessScreen(
     viewModel: PizzaCardViewModel,
     uiState: PizzaCardUiState.Success,
     modifier: Modifier = Modifier,
-    onButtonNextClicked: (Int) -> Unit = {},
+    onButtonNextClicked: () -> Unit = {},
     onIngredientCardClicked: (Int) -> Unit = {},
     padding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -151,7 +166,7 @@ private fun SuccessScreen(
             Text(
                 uiState.pizzaCard.name,
                 style = Typography.h5,
-                color = ShiftAppInternTheme.colors.titleText
+                color = colors.titleText
             )
             Spacer(Modifier.height(8.dp))
 
@@ -160,7 +175,7 @@ private fun SuccessScreen(
             Text(
                 ingredients,
                 style = Typography.body1,
-                color = ShiftAppInternTheme.colors.bodyPrimaryText
+                color = colors.bodyPrimaryText
             )
         }
         item {
@@ -168,10 +183,16 @@ private fun SuccessScreen(
         }
         item {
             val sizes = uiState.pizzaCard.sizes.map { it.name }
+            val selected by rememberSaveable { mutableIntStateOf(uiState.selectedSize.id) }
+            val integrationSource = remember { MutableInteractionSource() }
             PizzaTab(
-                tabTitles = sizes, onClickTabItem = { viewModel.selectPizzaAndUpdateTotal(it) },
+                tabTitles = sizes,
+                onClickTabItem = {
+                    viewModel.selectPizza(it)
+                },
+                selectedItem = selected,
                 modifier = modifier.clickable(
-                    interactionSource = remember { MutableInteractionSource() },
+                    interactionSource = integrationSource,
                     indication = null,
                     onClick = {})
             )
@@ -184,7 +205,7 @@ private fun SuccessScreen(
                 "Добавить по вкусу",
                 style = Typography.body1,
                 fontWeight = FontWeight.Medium,
-                color = ShiftAppInternTheme.colors.titleText
+                color = colors.titleText
             )
         }
         item {
@@ -192,20 +213,37 @@ private fun SuccessScreen(
         }
         val toppingCardModelList = uiState.pizzaCard.toppings
 
-        gridItems(toppingCardModelList, nColumns = 3) { item ->
+        gridItems(
+            data = toppingCardModelList,
+            nColumns = 3,
+            key = { item -> item.id }
+        ) { item ->
             val ingredientCardId = item.id
+            var isSelected by rememberSaveable { mutableStateOf(item.name in uiState.addedToppings) }
+            val borderStroke: Dp by animateDpAsState(
+                targetValue = if (isSelected) 2.dp else 0.dp,
+                label = ""
+            )
+            val integrationSource = remember { MutableInteractionSource() }
 
             ToppingCard(
                 toppingCard = item,
-                onClickCard = { toppingCard, isSelected ->
+                onClickCard = {
+                    isSelected = !isSelected
                     viewModel.addTopping(
-                        toppingCard = toppingCard,
+                        toppingCard = item,
                         isAdd = isSelected
                     )
+
                 },
                 modifier = modifier
                     .padding(4.dp)
-                    .clickable(interactionSource = remember { MutableInteractionSource() },
+                    .border(
+                        width = borderStroke,
+                        color = if (borderStroke == 0.dp) Color.White else colors.brand,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .clickable(interactionSource = integrationSource,
                         indication = null,
                         onClick = {
                             onIngredientCardClicked(ingredientCardId)
@@ -218,10 +256,10 @@ private fun SuccessScreen(
         }
 
         item {
-            val id = uiState.pizzaCard.id
             ShiftButton(
                 onClick = {
-                    onButtonNextClicked(id)
+                    onButtonNextClicked()
+                    viewModel.addPizza()
                 },
                 enabled = true,
                 modifier = modifier.fillMaxWidth()

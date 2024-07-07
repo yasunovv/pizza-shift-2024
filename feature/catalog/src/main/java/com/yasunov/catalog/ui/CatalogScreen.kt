@@ -17,6 +17,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -61,6 +62,10 @@ fun CatalogScreen(
         }
     ) { padding ->
         val viewModel = hiltViewModel<CatalogViewModel>()
+        DisposableEffect(Unit) {
+            viewModel.loadPizzaItem()
+            onDispose {  }
+        }
         val uiState by viewModel.uiState.collectAsState()
         when (val value = uiState) {
             is PizzaItemUiState.Loading -> LoadingScreen()

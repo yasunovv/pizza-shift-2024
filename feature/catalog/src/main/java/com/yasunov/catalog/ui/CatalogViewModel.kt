@@ -31,10 +31,6 @@ internal class CatalogViewModel @Inject constructor(
             initialValue = PizzaItemUiState.Loading
         )
 
-    init {
-        loadPizzaItem()
-    }
-
     fun loadPizzaItem() {
         viewModelScope.launch(dispatchers.default) {
             repository.getPizzaList()

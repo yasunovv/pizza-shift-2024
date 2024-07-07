@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yasunov.catalog.model.PizzaCard
 import com.yasunov.catalog.model.PizzaCardUiState
+import com.yasunov.catalog.model.Size
 import com.yasunov.catalog.util.asIngredient
 import com.yasunov.catalog.util.asSize
 import com.yasunov.common.AppDispatchers
@@ -38,11 +39,6 @@ class PizzaCardViewModel @AssistedInject constructor(
             initialValue = PizzaCardUiState.Loading
         )
 
-
-    init {
-        loadPizzaCard()
-    }
-
     fun loadPizzaCard() {
         viewModelScope.launch(dispatchers.default) {
             pizzaRepository.getPizzaById(id)
@@ -54,7 +50,7 @@ class PizzaCardViewModel @AssistedInject constructor(
                         img = pizzaCardModel.img,
                         ingredients = pizzaCardModel.ingredients.map { it.asIngredient() },
                         name = pizzaCardModel.name,
-                        sizes = pizzaCardModel.sizes.map { it.asSize() },
+                        sizes = pizzaCardModel.sizes.mapIndexed { id, item -> item.asSize(id = id) },
                         toppings = pizzaCardModel.toppings.mapIndexed { index, item ->
                             item.asToppingCardModel(
                                 index
@@ -66,9 +62,14 @@ class PizzaCardViewModel @AssistedInject constructor(
                 .catch { _uiState.update { PizzaCardUiState.Error } }
                 .collect { pizzaCard ->
                     _uiState.update {
+                        val size = pizzaCard.sizes[0]
                         PizzaCardUiState.Success(
                             pizzaCard = pizzaCard,
-                            sizePrice = pizzaCard.sizes[0].price,
+                            selectedSize = Size(
+                                id = size.id,
+                                name = size.name,
+                                price = size.price
+                            ),
                             total = pizzaCard.sizes[0].price
                         )
                     }
@@ -76,30 +77,27 @@ class PizzaCardViewModel @AssistedInject constructor(
         }
     }
 
-    fun selectPizzaAndUpdateTotal(size: String): Unit {
+    fun selectPizza(id: Int) {
         _uiState.update {
-            (it as PizzaCardUiState.Success).copy(sizePrice = findPriceByPizzaSize(size))
+            val size = (it as PizzaCardUiState.Success).pizzaCard.sizes[id]
+            it.copy(
+                selectedSize = Size(
+                    id = size.id,
+                    name = size.name,
+                    price = size.price
+                )
+            )
         }
         updateTotal()
-    }
-
-    private fun findPriceByPizzaSize(size: String): Int? {
-        (_uiState.value as PizzaCardUiState.Success).pizzaCard.sizes.forEach {
-            if (size == it.name) return it.price
-        }
-        return null
     }
 
     private fun updateTotal() {
         _uiState.update {
             (it as PizzaCardUiState.Success).copy(
-                total = (it.sizePrice ?: 0) +
+                total = it.selectedSize.price +
                         it.addedToppings.values.sum()
             )
-
-
         }
-
     }
 
     fun addTopping(toppingCard: ToppingCardModel, isAdd: Boolean) {
@@ -107,12 +105,17 @@ class PizzaCardViewModel @AssistedInject constructor(
             uiStateSuccess as PizzaCardUiState.Success
             val newMap = uiStateSuccess.addedToppings
             if (isAdd) newMap[toppingCard.name] = toppingCard.price
-            else newMap[toppingCard.name] = 0
+            else newMap.remove(toppingCard.name)
             uiStateSuccess.copy(
                 addedToppings = newMap
             )
         }
         updateTotal()
+    }
+
+    fun addPizza() {
+        TODO("Not yet implemented")
+//        todo sharedPreferences
     }
 
     @AssistedFactory

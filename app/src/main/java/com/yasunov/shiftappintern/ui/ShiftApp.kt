@@ -51,7 +51,10 @@ fun ShiftApp(
                     val pizzaCardDest: PizzaCardDest = backStackEntry.toRoute()
                     PizzaCardScreen(
                         id = pizzaCardDest.id,
-                        onBackIconClicked = { navController.popBackStack() }
+                        onBackIconClicked = { navController.popBackStack() },
+                        onButtonNextClicked = {
+                            navController.navigate(CatalogDest)
+                        }
                     )
                 }
             }
