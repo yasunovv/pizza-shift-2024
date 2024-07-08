@@ -12,7 +12,7 @@ object AppIconsResource {
     @DrawableRes
     val Pizza = R.drawable.pizza
     @DrawableRes
-    val Trash = R.drawable.trash
+    val Cart = R.drawable.cart
     @DrawableRes
     val ArrowLeft = R.drawable.arrow_left
 

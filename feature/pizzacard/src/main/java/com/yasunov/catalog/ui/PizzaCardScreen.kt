@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -44,22 +43,19 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.yasunov.catalog.model.PizzaCardUiState
+import com.yasunov.catalog.entity.PizzaCardUiState
 import com.yasunov.designsystem.component.PizzaTab
 import com.yasunov.designsystem.component.ShiftButton
+import com.yasunov.designsystem.component.ShiftScaffold
 import com.yasunov.designsystem.component.ToppingCard
 import com.yasunov.designsystem.icon.AppIconsResource
 import com.yasunov.designsystem.screen.ErrorScreen
 import com.yasunov.designsystem.screen.LoadingScreen
-import com.yasunov.designsystem.theme.BOTTOM_BAR_PADDING
-import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.ShiftAppInternTheme.colors
 import com.yasunov.designsystem.theme.Typography
 import com.yasunov.designsystem.theme.White
 import com.yasunov.designsystem.util.gridItems
 import com.yasunov.pizzacard.R
-
-private const val MATERIAL_TOP_BAR = 24
 
 @Composable
 fun PizzaCardScreen(
@@ -69,24 +65,19 @@ fun PizzaCardScreen(
     onButtonNextClicked: (Int) -> Unit = {},
 
 ) {
-    Scaffold(
-        drawerBackgroundColor = ShiftAppInternTheme.colors.uiBackground,
-        drawerContentColor = ShiftAppInternTheme.colors.uiBackground,
-        drawerScrimColor = ShiftAppInternTheme.colors.uiBackground,
-        backgroundColor = ShiftAppInternTheme.colors.uiBackground,
-        contentColor = ShiftAppInternTheme.colors.uiBackground,
-        contentWindowInsets = WindowInsets(0, MATERIAL_TOP_BAR, 0, BOTTOM_BAR_PADDING),
+    ShiftScaffold(
         topBar = {
+            val painter = painterResource(AppIconsResource.ArrowLeft)
             TopAppBar(
-                backgroundColor = ShiftAppInternTheme.colors.uiBackground,
+                backgroundColor = colors.uiBackground,
                 contentColor = Color.Transparent,
                 elevation = 5.dp
             ) {
                 Spacer(Modifier.padding(start = 16.dp))
                 Icon(
-                    painter = painterResource(AppIconsResource.ArrowLeft),
+                    painter = painter,
                     contentDescription = null,
-                    tint = ShiftAppInternTheme.colors.light,
+                    tint = colors.light,
                     modifier = modifier.size(24.dp)
                         .clickable { onBackIconClicked() }
                 )
@@ -232,7 +223,7 @@ private fun SuccessScreen(
                     isSelected = !isSelected
                     viewModel.addTopping(
                         toppingCard = item,
-                        isAdd = isSelected
+                        isSelected = isSelected
                     )
 
                 },
@@ -265,7 +256,7 @@ private fun SuccessScreen(
                 modifier = modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = stringResource(R.string.addPizzaToTrash, uiState.total),
+                    text = stringResource(R.string.addPizzaToCart, uiState.total),
                     style = Typography.body1,
                     color = White
                 )

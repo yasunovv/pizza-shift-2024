@@ -23,3 +23,7 @@ data class CatalogDTO(
     val toppings: List<ToppingDTO>,
     val totalFat: String
 )
+
+
+
+

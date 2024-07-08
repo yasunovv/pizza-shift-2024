@@ -27,6 +27,14 @@ private val LightColorPalette = ShiftAppInternColors(
 private val DarkColorPalette = LightColorPalette.copy()
 
 @Composable
+fun ProvideShiftAppInternColors(
+    colors: ShiftAppInternColors,
+    content: @Composable () -> Unit
+) {
+    CompositionLocalProvider(LocalShiftAppInternColors provides colors, content = content)
+}
+
+@Composable
 fun ShiftAppInternTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
@@ -67,13 +75,7 @@ data class ShiftAppInternColors(
 
 }
 
-@Composable
-fun ProvideShiftAppInternColors(
-    colors: ShiftAppInternColors,
-    content: @Composable () -> Unit
-) {
-    CompositionLocalProvider(LocalShiftAppInternColors provides colors, content = content)
-}
+
 
 private val LocalShiftAppInternColors = staticCompositionLocalOf<ShiftAppInternColors> {
     error("No colorPalette provided")
