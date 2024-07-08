@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="addPizzaToTrash">Добавить пиццу за %1$s ₽</string>
+    <string name="addPizzaToCart">Добавить пиццу за %1$s ₽</string>
 </resources>

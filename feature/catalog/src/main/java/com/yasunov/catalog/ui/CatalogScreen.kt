@@ -13,41 +13,29 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.yasunov.catalog.model.PizzaItemUiState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.yasunov.catalog.entity.PizzaItemUiState
+import com.yasunov.designsystem.component.ShiftScaffold
 import com.yasunov.designsystem.screen.ErrorScreen
 import com.yasunov.designsystem.screen.LoadingScreen
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
 
-private const val BOTTOM_BAR_PADDING = 56
-
 @Composable
 fun CatalogScreen(
     modifier: Modifier = Modifier,
-    navigateOnClick: (Int) -> Unit = {}
+    navigateOnClick: (Int) -> Unit = {},
 ) {
-    Scaffold(
-        drawerBackgroundColor = ShiftAppInternTheme.colors.uiBackground,
-        drawerContentColor = ShiftAppInternTheme.colors.uiBackground,
-        drawerScrimColor = ShiftAppInternTheme.colors.uiBackground,
-        backgroundColor = ShiftAppInternTheme.colors.uiBackground,
-        contentColor = ShiftAppInternTheme.colors.uiBackground,
-        contentWindowInsets = WindowInsets(
-            left = 0,
-            top = 56,
-            right = 0,
-            bottom = BOTTOM_BAR_PADDING
-        ),
+    ShiftScaffold(
         topBar = {
             TopAppBar(
                 backgroundColor = ShiftAppInternTheme.colors.uiBackground,
@@ -61,7 +49,11 @@ fun CatalogScreen(
         }
     ) { padding ->
         val viewModel = hiltViewModel<CatalogViewModel>()
-        val uiState by viewModel.uiState.collectAsState()
+        DisposableEffect(Unit) {
+            viewModel.loadPizzaItem()
+            onDispose {  }
+        }
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         when (val value = uiState) {
             is PizzaItemUiState.Loading -> LoadingScreen()
 
@@ -95,9 +87,7 @@ private fun SuccessScreen(
                 ),
             ),
     ) {
-        item {
-            Spacer(modifier.padding(0.dp))
-        }
+        item{}
         items(items = uiState.list, key = { it.id }) {
             PizzaItem(it, navigateOnClick)
         }

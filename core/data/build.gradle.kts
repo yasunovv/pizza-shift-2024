@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
 }
 
 android {
@@ -38,7 +40,10 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.javax.inject)
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.android.compiler)
     implementation(project(":core:network"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
+
 }

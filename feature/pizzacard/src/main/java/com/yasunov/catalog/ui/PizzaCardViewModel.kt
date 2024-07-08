@@ -2,10 +2,10 @@ package com.yasunov.catalog.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yasunov.catalog.model.PizzaCard
-import com.yasunov.catalog.model.PizzaCardUiState
-import com.yasunov.catalog.util.asIngredient
-import com.yasunov.catalog.util.asSize
+import com.yasunov.catalog.entity.PizzaCard
+import com.yasunov.catalog.entity.PizzaCardUiState
+import com.yasunov.catalog.entity.Size
+import com.yasunov.catalog.util.PizzaCardEntityConverter
 import com.yasunov.common.AppDispatchers
 import com.yasunov.data.PizzaRepository
 import com.yasunov.designsystem.model.ToppingCardModel
@@ -27,8 +27,15 @@ import kotlinx.coroutines.launch
 class PizzaCardViewModel @AssistedInject constructor(
     private val pizzaRepository: PizzaRepository,
     private val dispatchers: AppDispatchers,
-    @Assisted private val id: Int
+    private val converter: PizzaCardEntityConverter,
+    @Assisted private val id: Int,
 ) : ViewModel() {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(id: Int): PizzaCardViewModel
+    }
+
     private var _uiState: MutableStateFlow<PizzaCardUiState> =
         MutableStateFlow(PizzaCardUiState.Loading)
     val uiState: StateFlow<PizzaCardUiState>
@@ -38,23 +45,28 @@ class PizzaCardViewModel @AssistedInject constructor(
             initialValue = PizzaCardUiState.Loading
         )
 
-
-    init {
-        loadPizzaCard()
-    }
-
     fun loadPizzaCard() {
+        if (_uiState.value is PizzaCardUiState.Success) return
         viewModelScope.launch(dispatchers.default) {
             pizzaRepository.getPizzaById(id)
                 .map { pizzaCardModel ->
-                    if (pizzaCardModel == null) throw IllegalStateException()
+                    if (pizzaCardModel == null) error("Ошибка получения карточки с пиццей")
                     PizzaCard(
                         id = pizzaCardModel.id,
                         description = pizzaCardModel.description,
                         img = pizzaCardModel.img,
-                        ingredients = pizzaCardModel.ingredients.map { it.asIngredient() },
+                        ingredients = pizzaCardModel.ingredients.map {
+                            converter.asIngredient(
+                                ingredientModel = it
+                            )
+                        },
                         name = pizzaCardModel.name,
-                        sizes = pizzaCardModel.sizes.map { it.asSize() },
+                        sizes = pizzaCardModel.sizes.mapIndexed { id, item ->
+                            converter.asSize(
+                                id = id,
+                                sizeModel = item
+                            )
+                        },
                         toppings = pizzaCardModel.toppings.mapIndexed { index, item ->
                             item.asToppingCardModel(
                                 index
@@ -66,57 +78,68 @@ class PizzaCardViewModel @AssistedInject constructor(
                 .catch { _uiState.update { PizzaCardUiState.Error } }
                 .collect { pizzaCard ->
                     _uiState.update {
+                        val size = pizzaCard.sizes[0]
                         PizzaCardUiState.Success(
                             pizzaCard = pizzaCard,
-                            sizePrice = pizzaCard.sizes[0].price,
-                            total = pizzaCard.sizes[0].price
+                            selectedSize = Size(
+                                id = size.id,
+                                name = size.name,
+                                price = size.price,
+                            ),
                         )
                     }
                 }
         }
     }
 
-    fun selectPizzaAndUpdateTotal(size: String): Unit {
+    fun selectPizza(id: Int) {
         _uiState.update {
-            (it as PizzaCardUiState.Success).copy(sizePrice = findPriceByPizzaSize(size))
+            val size = (it as PizzaCardUiState.Success).pizzaCard.sizes[id]
+            it.copy(
+                selectedSize = Size(
+                    id = size.id,
+                    name = size.name,
+                    price = size.price
+                )
+            )
+
+
         }
         updateTotal()
     }
 
-    private fun findPriceByPizzaSize(size: String): Int? {
-        (_uiState.value as PizzaCardUiState.Success).pizzaCard.sizes.forEach {
-            if (size == it.name) return it.price
+    fun addTopping(toppingCard: ToppingCardModel, isSelected: Boolean) {
+        _uiState.update { uiStateSuccess ->
+            uiStateSuccess as PizzaCardUiState.Success
+            val newMap: MutableMap<String, Int> = hashMapOf()
+            uiStateSuccess.addedToppings.forEach { (key, value) ->
+                newMap[key] = value
+            }
+            if (isSelected) newMap[toppingCard.name] = toppingCard.price
+            else newMap.remove(toppingCard.name)
+            uiStateSuccess.copy(
+                addedToppings = newMap.toMap(),
+            )
+
         }
-        return null
+        updateTotal()
+
+
     }
 
     private fun updateTotal() {
-        _uiState.update {
-            (it as PizzaCardUiState.Success).copy(
-                total = (it.sizePrice ?: 0) +
-                        it.addedToppings.values.sum()
-            )
-
-
-        }
-
-    }
-
-    fun addTopping(toppingCard: ToppingCardModel, isAdd: Boolean) {
         _uiState.update { uiStateSuccess ->
             uiStateSuccess as PizzaCardUiState.Success
-            val newMap = uiStateSuccess.addedToppings
-            if (isAdd) newMap[toppingCard.name] = toppingCard.price
-            else newMap[toppingCard.name] = 0
             uiStateSuccess.copy(
-                addedToppings = newMap
+                total = uiStateSuccess.selectedSize.price + uiStateSuccess.addedToppings.map { it.value }
+                    .sum()
             )
         }
-        updateTotal()
     }
 
-    @AssistedFactory
-    interface Factory {
-        fun create(id: Int): PizzaCardViewModel
+    fun addPizza() {
+        TODO("Not yet implemented")
+//        todo sharedPreferences
     }
+
 }

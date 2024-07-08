@@ -7,28 +7,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 
-fun LazyListScope.gridItems(
-    count: Int,
-    nColumns: Int,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    itemContent: @Composable BoxScope.(Int) -> Unit,
-) {
-    gridItems(
-        data = List(count) { it },
-        nColumns = nColumns,
-        horizontalArrangement = horizontalArrangement,
-        itemContent = itemContent,
-    )
-}
-
-fun <T> LazyListScope.gridItems(
+inline fun <T> LazyListScope.gridItems(
     data: List<T>,
     nColumns: Int,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    key: ((item: T) -> Any)? = null,
-    itemContent: @Composable BoxScope.(T) -> Unit,
+    noinline key: ((item: T) -> Any)? = null,
+    crossinline itemContent: @Composable BoxScope.(T) -> Unit,
 ) {
     val rows = if (data.isEmpty()) 0 else 1 + (data.count() - 1) / nColumns
     items(rows) { rowIndex ->
@@ -39,12 +26,12 @@ fun <T> LazyListScope.gridItems(
                 val itemIndex = rowIndex * nColumns + columnIndex
                 if (itemIndex < data.count()) {
                     val item = data[itemIndex]
-                    androidx.compose.runtime.key(key?.invoke(item)) {
+                    key(key?.invoke(item)) {
                         Box(
                             modifier = Modifier.weight(1f, fill = true),
                             propagateMinConstraints = true
                         ) {
-                            itemContent.invoke(this, item)
+                            itemContent(this, item)
                         }
                     }
                 } else {

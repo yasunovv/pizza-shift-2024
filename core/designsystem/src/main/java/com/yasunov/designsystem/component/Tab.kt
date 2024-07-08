@@ -32,10 +32,10 @@ import com.yasunov.designsystem.theme.Typography
 fun PizzaTab(
     tabTitles: List<String>,
     modifier: Modifier = Modifier,
-    onClickTabItem: (String) -> Unit = {},
+    onClickTabItem: (Int) -> Unit = {},
+    selectedItem: Int = 0
 ) {
-    var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
-
+    var selectedTabIndex by rememberSaveable { mutableIntStateOf(selectedItem) }
     TabRow(
         selectedTabIndex = selectedTabIndex,
         backgroundColor = colors.secondary,
@@ -52,9 +52,9 @@ fun PizzaTab(
             .padding(2.dp)
     ) {
         tabTitles.forEachIndexed { index, text ->
-            TabItem(text = text, selected = selectedTabIndex == index) { text ->
+            TabItem(text = text, selected = selectedTabIndex == index) {
                 selectedTabIndex = index
-                onClickTabItem(text)
+                onClickTabItem(index)
             }
         }
     }
@@ -62,7 +62,7 @@ fun PizzaTab(
 }
 
 @Composable
-private fun TabItem(text: String, selected: Boolean, onClick: (String) -> Unit) {
+private fun TabItem(text: String, selected: Boolean, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .background(
@@ -70,7 +70,7 @@ private fun TabItem(text: String, selected: Boolean, onClick: (String) -> Unit) 
                 shape = RoundedCornerShape(14.dp)
             )
             .clickable(
-                onClick = { onClick(text) },
+                onClick = { onClick() },
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() })
             .padding(horizontal = 16.dp, vertical = 10.dp)
@@ -95,7 +95,12 @@ private fun PreviewTab() {
                 .background(colors.light)
                 .padding(horizontal = 24.dp)
         ) {
-            PizzaTab(listOf("Маленькая", "Средняя", "Большая"), Modifier)
+            PizzaTab(
+                tabTitles = listOf("Маленькая", "Средняя", "Большая"),
+                modifier = Modifier,
+                onClickTabItem = {},
+                selectedItem = 0
+            )
 
         }
     }

@@ -1,4 +1,4 @@
-package com.yasunov.catalog.model
+package com.yasunov.catalog.entity
 
 import androidx.compose.runtime.Immutable
 import com.yasunov.designsystem.model.ToppingCardModel

@@ -43,7 +43,7 @@ internal fun BottomBar(modifier: Modifier) {
         )
         Spacer(modifier.weight(1f))
         BottomAppBarItem(
-            AppIconsResource.Trash,
+            AppIconsResource.Cart,
             name = "Корзина",
             isActive = false,
             onClick = {}
@@ -70,6 +70,7 @@ private fun BottomAppBarItem(
     val icon = icon
     val currentColor =
         if (isActive) ShiftAppInternTheme.colors.brand else ShiftAppInternTheme.colors.iconSecondary
+    val painter = painterResource(id = icon)
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -77,7 +78,7 @@ private fun BottomAppBarItem(
             .height(89.dp)
     ) {
         Icon(
-            painter = painterResource(id = icon), contentDescription = null, tint = currentColor,
+            painter = painter, contentDescription = null, tint = currentColor,
             modifier = modifier.size(20.dp)
         )
         Spacer(modifier = modifier.height(2.dp))
