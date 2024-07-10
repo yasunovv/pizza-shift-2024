@@ -1,8 +1,8 @@
 package com.yasunov.cart.ui
 
 import androidx.lifecycle.ViewModel
-import com.yasunov.cart.entity.CartItemEntity
-import com.yasunov.cart.entity.CartUiState
+import com.yasunov.cart.model.CartItemModel
+import com.yasunov.cart.model.CartUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,7 @@ class CartViewModel @Inject constructor(
 ) : ViewModel() {
     private var _uiState: MutableStateFlow<CartUiState> =
         MutableStateFlow(CartUiState.Success(list = List(6) { index ->
-            CartItemEntity(
+            CartItemModel(
                 id = index,
                 imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
                 name = "ШИФТ Суприм",

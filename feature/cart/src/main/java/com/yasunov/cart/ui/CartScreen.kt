@@ -33,8 +33,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.yasunov.cart.entity.CartItemEntity
-import com.yasunov.cart.entity.CartUiState
+import com.yasunov.cart.model.CartItemModel
+import com.yasunov.cart.model.CartUiState
 import com.yasunov.designsystem.component.ShiftButton
 import com.yasunov.designsystem.component.ShiftScaffold
 import com.yasunov.designsystem.icon.AppIconsResource
@@ -165,7 +165,7 @@ private fun SuccessScreen(
 }
 
 private val list = List(6) { index ->
-    CartItemEntity(
+    CartItemModel(
         id = index,
         imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
         name = "ШИФТ Суприм",

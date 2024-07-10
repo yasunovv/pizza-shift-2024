@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -41,9 +42,10 @@ internal fun BottomBar(
         contentColor = Color.Transparent,
         elevation = 0.dp,
         modifier = modifier
-
+            .fillMaxWidth()
+            .height(66.dp)
+            .padding(start = 16.dp, top = 8.dp),
     ) {
-        Spacer(Modifier.padding(start = 16.dp))
         BottomAppBarItem(
             AppIconsResource.Pizza,
             name = "Пицца",
@@ -96,6 +98,8 @@ internal fun BottomBar(
 
         )
         Spacer(Modifier.padding(end = 16.dp))
+
+
     }
 }
 

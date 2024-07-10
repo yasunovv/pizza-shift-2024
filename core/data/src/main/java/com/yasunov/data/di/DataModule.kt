@@ -1,6 +1,6 @@
 package com.yasunov.data.di
 
-import com.yasunov.data.conventer.ConverterDto
+import com.yasunov.data.conventer.ConverterPizzaCardDto
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +16,9 @@ internal object DataModule {
     fun provideDtoConverter (
         @Named("BASE_URL")
         baseUrl: String
-    ): ConverterDto {
-        return ConverterDto(baseUrl = baseUrl)
+    ): ConverterPizzaCardDto {
+        return ConverterPizzaCardDto(baseUrl = baseUrl)
     }
+
+
 }

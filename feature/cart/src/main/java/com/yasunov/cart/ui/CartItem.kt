@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.yasunov.cart.R
-import com.yasunov.cart.entity.CartItemEntity
+import com.yasunov.cart.model.CartItemModel
 import com.yasunov.designsystem.R.string
 import com.yasunov.designsystem.component.Counter
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
@@ -29,7 +29,7 @@ import com.yasunov.designsystem.theme.Typography
 
 @Composable
 fun CartItem(
-    cartItemEntity: CartItemEntity,
+    cartItemEntity: CartItemModel,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -99,7 +99,7 @@ fun CartItem(
 private fun CartItemPreview() {
     ShiftAppInternTheme {
         CartItem(
-            cartItemEntity = CartItemEntity(
+            cartItemEntity = CartItemModel(
                 id = 1,
                 imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
                 name = "ШИФТ Суприм",

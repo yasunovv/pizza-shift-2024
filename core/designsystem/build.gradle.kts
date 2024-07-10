@@ -47,7 +47,7 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(project(":core:model"))
+    implementation(project(":core:domain"))
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.compose.material)
 //    Coil

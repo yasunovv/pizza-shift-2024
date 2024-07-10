@@ -1,6 +1,6 @@
 package com.yasunov.catalog.di
 
-import com.yasunov.catalog.util.PizzaCardEntityConverter
+import com.yasunov.catalog.converter.PizzaCardConverter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,5 +12,5 @@ import javax.inject.Singleton
 class PizzaCardModule {
     @Provides
     @Singleton
-    fun provideConverterEntity(): PizzaCardEntityConverter = PizzaCardEntityConverter()
+    fun provideConverterEntity(): PizzaCardConverter = PizzaCardConverter()
 }

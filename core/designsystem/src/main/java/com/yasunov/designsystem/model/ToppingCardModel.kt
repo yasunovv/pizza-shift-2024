@@ -1,6 +1,5 @@
 package com.yasunov.designsystem.model
 import androidx.compose.runtime.Immutable
-import com.yasunov.model.ToppingModel
 
 @Immutable
 data class ToppingCardModel(
@@ -10,5 +9,3 @@ data class ToppingCardModel(
     val imageSrc: String
 )
 
-fun ToppingModel.asToppingCardModel(id: Int): ToppingCardModel =
-    ToppingCardModel(id = id, price = price, name = name, imageSrc = img)

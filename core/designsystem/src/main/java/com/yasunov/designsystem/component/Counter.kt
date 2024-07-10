@@ -41,7 +41,7 @@ fun Counter(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
-        modifier = Modifier
+        modifier = modifier
             .background(
                 color = ShiftAppInternTheme.colors.secondary,
                 shape = RoundedCornerShape(14.dp)
