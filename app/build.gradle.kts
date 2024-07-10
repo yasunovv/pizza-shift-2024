@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(project(":feature:catalog"))
     implementation(project(":feature:pizzacard"))
+    implementation(project(":feature:cart"))
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 //    Tests

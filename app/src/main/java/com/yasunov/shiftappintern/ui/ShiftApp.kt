@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.yasunov.cart.navigation.CartDest
+import com.yasunov.cart.ui.CartScreen
 import com.yasunov.catalog.navigation.CatalogDest
 import com.yasunov.catalog.navigation.PizzaCardDest
 import com.yasunov.catalog.ui.CatalogScreen
@@ -19,13 +21,16 @@ import com.yasunov.designsystem.component.ShiftScaffold
 fun ShiftApp(
     modifier: Modifier = Modifier
 ) {
-
+    val navController = rememberNavController()
     ShiftScaffold(
         bottomBar = {
-            BottomBar(modifier)
+            BottomBar(
+                navController = navController,
+                modifier = modifier
+            )
         }
     ) { padding ->
-        val navController = rememberNavController()
+
 
         Column(modifier.padding(padding)) {
             NavHost(navController = navController, startDestination = CatalogDest) {
@@ -46,6 +51,14 @@ fun ShiftApp(
                         }
                     )
                 }
+                composable<CartDest> { backStackEntry ->
+//                    val pizzaCardDest: PizzaCardDest = backStackEntry.toRoute()
+                    CartScreen(
+                        onBackIconClicked = { navController.popBackStack() },
+
+                        )
+                }
+
             }
         }
 

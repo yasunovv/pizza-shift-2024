@@ -67,13 +67,16 @@ fun CartItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start,
             ) {
-                Counter(valueHandler = {}, initialValue = 1, minValue = 0, maxValue = 8)
-                Spacer(modifier.width(16.dp))
+                Counter(
+                    valueHandler = {}, initialValue = 1, minValue = 0, maxValue = 8,
+                )
+                Spacer(modifier.width(8.dp))
                 Text(
                     text = stringResource(R.string.change),
                     textDecoration = TextDecoration.Underline,
                     style = Typography.body2,
-                    color = ShiftAppInternTheme.colors.quarterlyText
+                    color = ShiftAppInternTheme.colors.quarterlyText,
+//                    modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier.weight(1f))
                 Text(
@@ -82,7 +85,8 @@ fun CartItem(
                         cartItemEntity.price.toString()
                     ),
                     style = Typography.subtitle1,
-                    color = ShiftAppInternTheme.colors.titleText
+                    color = ShiftAppInternTheme.colors.titleText,
+//                    modifier = Modifier.weight(1f)
                 )
             }
 

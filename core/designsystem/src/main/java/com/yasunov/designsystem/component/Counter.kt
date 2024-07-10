@@ -14,13 +14,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
@@ -34,14 +35,13 @@ fun Counter(
     minValue: Int,
     maxValue: Int,
     modifier: Modifier = Modifier,
-
     ) {
-    var counter by rememberSaveable { mutableStateOf(initialValue) }
+    var counter by rememberSaveable { mutableIntStateOf(initialValue) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
-        modifier = modifier
+        modifier = Modifier
             .background(
                 color = ShiftAppInternTheme.colors.secondary,
                 shape = RoundedCornerShape(14.dp)
@@ -53,7 +53,9 @@ fun Counter(
             "-",
             style = Typography.body2,
             color = ShiftAppInternTheme.colors.bodyPrimaryText,
-            modifier = Modifier.clickable(
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .clickable(
                 indication = null,
                 interactionSource = interactionSource
             ) {

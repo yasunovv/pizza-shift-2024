@@ -15,11 +15,10 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -38,12 +37,7 @@ class PizzaCardViewModel @AssistedInject constructor(
 
     private var _uiState: MutableStateFlow<PizzaCardUiState> =
         MutableStateFlow(PizzaCardUiState.Loading)
-    val uiState: StateFlow<PizzaCardUiState>
-        get() = _uiState.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = PizzaCardUiState.Loading
-        )
+    val uiState: StateFlow<PizzaCardUiState> get() = _uiState.asStateFlow()
 
     fun loadPizzaCard() {
         if (_uiState.value is PizzaCardUiState.Success) return

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="change">Изменить</string>
+    <string name="pizza_cost">Стоимость заказа %1$s ₽</string>
+    <string name="checkout_pizza">Оформить заказ</string>
 </resources>
