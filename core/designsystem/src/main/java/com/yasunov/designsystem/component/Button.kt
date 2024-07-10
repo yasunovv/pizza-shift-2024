@@ -36,7 +36,7 @@ fun ShiftButton(
 
 @Preview
 @Composable
-fun ShiftButtonPreview() {
+private fun ShiftButtonPreview() {
     ShiftAppInternTheme {
         ShiftButton(onClick = {}) {
             Text("Оформить заказ", style = Typography.body1)
