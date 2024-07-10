@@ -3,8 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrains.kotlinx.serialization)
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -20,7 +20,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -58,8 +58,8 @@ dependencies {
     implementation(libs.coil.kt.compose)
     implementation(libs.coil.kt)
 //    Hilt
-    implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(project(":core:designsystem"))
+    implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 }

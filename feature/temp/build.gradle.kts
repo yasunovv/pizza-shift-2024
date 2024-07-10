@@ -18,7 +18,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -53,4 +53,5 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.converter.kotlinx.serialization)
     implementation(project(":core:designsystem"))
+
 }

@@ -1,14 +1,11 @@
 package com.yasunov.network.di
 
-import android.content.Context
-import coil.ImageLoader
 import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
 import com.yasunov.network.PizzaApi
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -26,16 +23,6 @@ import javax.inject.Singleton
 @Module(includes = [NetworkBindModule::class])
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val TIMEOUT = 1000L
-
-    @Provides
-    @Singleton
-    fun provideImageLoader(
-        @ApplicationContext application: Context,
-    ): ImageLoader =
-        ImageLoader.Builder(application)
-            .respectCacheHeaders(false)
-            .build()
 
     @Provides
     @Singleton
@@ -65,11 +52,12 @@ object NetworkModule {
     fun provideOkHttpClient(
         interceptor: Interceptor
     ): OkHttpClient {
+        val timeout = 1000L
         return OkHttpClient.Builder()
-            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .connectTimeout(timeout, TimeUnit.SECONDS)
+            .readTimeout(timeout, TimeUnit.SECONDS)
             .addInterceptor(interceptor)
-            .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(timeout, TimeUnit.SECONDS)
             .build()
     }
     @Provides

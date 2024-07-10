@@ -57,7 +57,9 @@ android {
         }
     }
 }
-
+hilt {
+    enableAggregatingTask = true
+}
 dependencies {
 
 // Android core
@@ -77,10 +79,7 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(project(":feature:catalog"))
-    implementation(project(":feature:pizzacard"))
-    implementation(project(":feature:cart"))
-    implementation(project(":feature:temp"))
+
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 //    Tests
@@ -94,9 +93,14 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
-    kapt (libs.hilt.android.compiler)
-    implementation (libs.hilt.android)
+
     implementation(project(":core:common"))
     implementation(project(":core:network"))
     implementation(project(":core:designsystem"))
+    implementation(project(":feature:catalog"))
+    implementation(project(":feature:pizzacard"))
+    implementation(project(":feature:cart"))
+    implementation(project(":feature:temp"))
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 }

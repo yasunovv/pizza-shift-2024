@@ -57,9 +57,7 @@ dependencies {
     implementation(libs.coil.kt.compose)
     implementation(libs.coil.kt)
 //    Hilt
-    implementation (libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-    kapt (libs.hilt.android.compiler)
 //    viewModel ktx
 //    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.fragment.ktx)
@@ -72,4 +70,6 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:data"))
     implementation(project(":core:common"))
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 }
