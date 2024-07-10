@@ -15,6 +15,8 @@ import com.yasunov.catalog.navigation.PizzaCardDest
 import com.yasunov.catalog.ui.CatalogScreen
 import com.yasunov.catalog.ui.PizzaCardScreen
 import com.yasunov.designsystem.component.ShiftScaffold
+import com.yasunov.temp.navigation.OrdersDest
+import com.yasunov.temp.screen.OrdersScreen
 
 
 @Composable
@@ -47,17 +49,18 @@ fun ShiftApp(
                         id = pizzaCardDest.id,
                         onBackIconClicked = { navController.popBackStack() },
                         onButtonNextClicked = {
-                            navController.navigate(CatalogDest)
+                            navController.navigate(CartDest)
                         }
                     )
                 }
-                composable<CartDest> { backStackEntry ->
-//                    val pizzaCardDest: PizzaCardDest = backStackEntry.toRoute()
-                    CartScreen(
-                        onBackIconClicked = { navController.popBackStack() },
-
-                        )
+                composable<CartDest> {
+                    CartScreen(onBackIconClicked = { navController.popBackStack() })
                 }
+                composable<OrdersDest> {
+                    OrdersScreen()
+                }
+
+
 
             }
         }

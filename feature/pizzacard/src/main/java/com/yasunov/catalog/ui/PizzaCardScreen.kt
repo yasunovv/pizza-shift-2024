@@ -58,7 +58,7 @@ fun PizzaCardScreen(
     id: Int,
     modifier: Modifier = Modifier,
     onBackIconClicked: () -> Unit = {},
-    onButtonNextClicked: (Int) -> Unit = {},
+    onButtonNextClicked: () -> Unit = {},
 
     ) {
     ShiftScaffold(
@@ -97,7 +97,8 @@ fun PizzaCardScreen(
             is PizzaCardUiState.Success -> SuccessScreen(
                 viewModel = viewModel,
                 uiState = value,
-                padding = paddingValues
+                padding = paddingValues,
+                onButtonNextClicked = onButtonNextClicked
             )
 
             is PizzaCardUiState.Error -> ErrorScreen(
@@ -117,7 +118,6 @@ private fun SuccessScreen(
     uiState: PizzaCardUiState.Success,
     modifier: Modifier = Modifier,
     onButtonNextClicked: () -> Unit = {},
-    onIngredientCardClicked: (Int) -> Unit = {},
     padding: PaddingValues = PaddingValues(0.dp),
 ) {
     LazyColumn(
@@ -233,9 +233,7 @@ private fun SuccessScreen(
                     )
                     .clickable(interactionSource = integrationSource,
                         indication = null,
-                        onClick = {
-                            onIngredientCardClicked(ingredientCardId)
-                        }),
+                        onClick = {}),
             )
 
         }

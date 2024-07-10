@@ -1,6 +1,5 @@
 package com.yasunov.cart.ui
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,12 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -33,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.yasunov.cart.R
 import com.yasunov.cart.model.CartItemModel
 import com.yasunov.cart.model.CartUiState
 import com.yasunov.designsystem.component.ShiftButton
@@ -57,13 +55,6 @@ fun CartScreen(
                 elevation = 5.dp
             ) {
                 Spacer(Modifier.padding(start = 16.dp))
-                Icon(
-                    painter = painter,
-                    contentDescription = null,
-                    tint = colors.light,
-                    modifier = modifier.size(24.dp)
-                        .clickable { onBackIconClicked() }
-                )
                 Text(
                     "Пицца", style = Typography.h5, color = colors.titleText,
                     modifier = modifier.padding(start = 32.dp, end = 16.dp)
@@ -136,7 +127,7 @@ private fun SuccessScreen(
             ) {
                 Spacer(modifier.weight(1f))
                 Text(
-                    text = stringResource(com.yasunov.cart.R.string.pizza_cost, uiState.total),
+                    text = stringResource(R.string.pizza_cost, uiState.total),
                     textAlign = TextAlign.Center,
                     style = Typography.body1,
                     color = colors.bodyPrimaryText,
@@ -150,7 +141,7 @@ private fun SuccessScreen(
                     modifier = modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = stringResource(com.yasunov.cart.R.string.checkout_pizza),
+                        text = stringResource(R.string.checkout_pizza),
                         style = Typography.body1,
                         color = Color.White,
                     )
