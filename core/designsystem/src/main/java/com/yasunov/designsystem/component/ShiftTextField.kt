@@ -36,8 +36,12 @@ fun ShiftTextField(
         textStyle = Typography.body1,
         modifier = modifier
             .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = ShiftAppInternTheme.colors.light,
+                RoundedCornerShape(16.dp)
+            )
             .background(color = Color.White, shape = RoundedCornerShape(16.dp))
-            .border(width = 1.dp, color = ShiftAppInternTheme.colors.light)
             .padding(16.dp),
     )
 
