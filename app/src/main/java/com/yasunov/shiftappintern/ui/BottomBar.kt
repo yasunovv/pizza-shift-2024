@@ -28,6 +28,8 @@ import com.yasunov.catalog.navigation.CatalogDest
 import com.yasunov.designsystem.icon.AppIconsResource
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
+import com.yasunov.temp.navigation.OrdersDest
+import com.yasunov.temp.navigation.ProfileDest
 import kotlin.reflect.KClass
 
 
@@ -65,9 +67,12 @@ internal fun BottomBar(
         BottomAppBarItem(
             AppIconsResource.Clock,
             name = "Заказы",
-            isActive = false,
+            isActive = checkDestination(
+                navBackStackEntry = navBackStackEntry,
+                route = OrdersDest::class
+            ),
             modifier = Modifier.clickable(
-                onClick = { },
+                onClick = { navController.navigate(OrdersDest) },
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() })
 
@@ -90,9 +95,12 @@ internal fun BottomBar(
         BottomAppBarItem(
             AppIconsResource.User,
             name = "Профиль",
-            isActive = false,
+            isActive = checkDestination(
+                navBackStackEntry = navBackStackEntry,
+                route = ProfileDest::class
+            ),
             modifier = Modifier.clickable(
-                onClick = { },
+                onClick = { navController.navigate(ProfileDest) },
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() })
 

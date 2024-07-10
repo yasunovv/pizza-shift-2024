@@ -17,10 +17,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -47,10 +49,10 @@ fun OrdersScreen(modifier: Modifier = Modifier) {
         }
     ) { padding ->
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(48.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
             modifier = modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(horizontal = 16.dp)
                 .consumeWindowInsets(padding)
                 .windowInsetsPadding(
                     WindowInsets.safeDrawing.only(
@@ -58,6 +60,7 @@ fun OrdersScreen(modifier: Modifier = Modifier) {
                     ),
                 ),
         ) {
+            item {}
             item {
                 Text(
                     text = "Статус",
@@ -65,9 +68,11 @@ fun OrdersScreen(modifier: Modifier = Modifier) {
                     color = colors.tertiaryText,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
-                Spacer(modifier.height(24.dp))
-                Row {
-                    Box(modifier = modifier.size(8.dp).background(colors.yellow))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = modifier.size(8.dp)
+                            .background(shape = RoundedCornerShape(4.dp), color = colors.yellow)
+                    )
                     Spacer(modifier.width(12.dp))
                     Text(
                         text = "Заказ оформлен",
@@ -102,6 +107,7 @@ fun OrdersScreen(modifier: Modifier = Modifier) {
                     textAlign = TextAlign.Center,
                     style = Typography.body1,
                     color = colors.bodyPrimaryText,
+                    modifier = modifier.padding(bottom = 4.dp)
                 )
                 Text(
                     text = "Сырная",
@@ -109,11 +115,12 @@ fun OrdersScreen(modifier: Modifier = Modifier) {
                     style = Typography.body1,
                     color = colors.bodyPrimaryText,
                 )
+
+            }
+            item {
                 Divider(
                     color = colors.extraLight,
                     thickness = 1.dp,
-                    startIndent = 16.dp,
-                    modifier = Modifier.padding(end = 16.dp)
                 )
             }
             item {
@@ -123,9 +130,65 @@ fun OrdersScreen(modifier: Modifier = Modifier) {
                     color = colors.tertiaryText,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = modifier.size(8.dp)
+                            .background(color = colors.red, shape = RoundedCornerShape(4.dp))
+                    )
+                    Spacer(modifier.width(12.dp))
+                    Text(
+                        text = "Заказ отменен",
+                        style = Typography.body1,
+                        color = colors.bodyPrimaryText,
+                    )
+                }
                 Spacer(modifier.height(24.dp))
-                Row {
-                    Box(modifier = modifier.size(8.dp).background(colors.green))
+                Text(
+                    text = "Адрес доставки",
+                    textAlign = TextAlign.Center,
+                    style = Typography.caption,
+                    color = colors.tertiaryText,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                Text(
+                    text = "Россия, г. Новосибирск, ул. Кирова, д. 86",
+                    textAlign = TextAlign.Center,
+                    style = Typography.body1,
+                    color = colors.bodyPrimaryText,
+                )
+                Spacer(modifier.height(24.dp))
+                Text(
+                    text = "Состав заказа",
+                    textAlign = TextAlign.Center,
+                    style = Typography.caption,
+                    color = colors.tertiaryText,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                Text(
+                    text = "С ананасом",
+                    textAlign = TextAlign.Center,
+                    style = Typography.body1,
+                    color = colors.bodyPrimaryText,
+                )
+            }
+            item {
+                Divider(
+                    color = colors.extraLight,
+                    thickness = 1.dp,
+                )
+            }
+            item {
+                Text(
+                    text = "Статус",
+                    style = Typography.caption,
+                    color = colors.tertiaryText,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = modifier.size(8.dp)
+                            .background(color = colors.green, shape = RoundedCornerShape(4.dp))
+                    )
                     Spacer(modifier.width(12.dp))
                     Text(
                         text = "Заказ доставлен",

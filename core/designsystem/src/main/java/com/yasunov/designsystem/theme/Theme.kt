@@ -25,6 +25,7 @@ private val LightColorPalette = ShiftAppInternColors(
     extraLight = ExtraLight,
     yellow = Yellow,
     green = Green,
+    red = Red
 )
 
 private val DarkColorPalette = LightColorPalette.copy()
@@ -76,7 +77,8 @@ data class ShiftAppInternColors(
     val secondary: Color,
     val extraLight: Color,
     val yellow: Color,
-    val green: Color
+    val green: Color,
+    val red: Color
 )
 
 

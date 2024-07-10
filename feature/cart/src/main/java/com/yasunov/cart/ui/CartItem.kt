@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.yasunov.cart.R
 import com.yasunov.cart.model.CartItemModel
 import com.yasunov.designsystem.R.string
 import com.yasunov.designsystem.component.Counter

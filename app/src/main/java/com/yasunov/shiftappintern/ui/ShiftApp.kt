@@ -16,7 +16,9 @@ import com.yasunov.catalog.ui.CatalogScreen
 import com.yasunov.catalog.ui.PizzaCardScreen
 import com.yasunov.designsystem.component.ShiftScaffold
 import com.yasunov.temp.navigation.OrdersDest
+import com.yasunov.temp.navigation.ProfileDest
 import com.yasunov.temp.screen.OrdersScreen
+import com.yasunov.temp.screen.ProfileScreen
 
 
 @Composable
@@ -58,6 +60,9 @@ fun ShiftApp(
                 }
                 composable<OrdersDest> {
                     OrdersScreen()
+                }
+                composable<ProfileDest> {
+                    ProfileScreen()
                 }
 
 
