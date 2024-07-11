@@ -16,14 +16,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.yasunov.catalog.entity.PizzaItemUiState
+import com.yasunov.catalog.model.PizzaItemUiState
 import com.yasunov.designsystem.component.ShiftScaffold
 import com.yasunov.designsystem.screen.ErrorScreen
 import com.yasunov.designsystem.screen.LoadingScreen
@@ -49,12 +49,12 @@ fun CatalogScreen(
         }
     ) { padding ->
         val viewModel = hiltViewModel<CatalogViewModel>()
-        DisposableEffect(Unit) {
+        LaunchedEffect(Unit) {
             viewModel.loadPizzaItem()
-            onDispose {  }
         }
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         when (val value = uiState) {
+            is PizzaItemUiState.Initial -> {}
             is PizzaItemUiState.Loading -> LoadingScreen()
 
             is PizzaItemUiState.Success -> SuccessScreen(

@@ -1,8 +1,9 @@
 package com.yasunov.data
 
-import com.yasunov.data.conventer.ConverterDto
-import com.yasunov.model.PizzaCardModel
-import com.yasunov.model.PizzaModel
+import com.yasunov.data.conventer.ConverterPizzaCardDto
+import com.yasunov.data.conventer.ConverterPizzaModelDto
+import com.yasunov.model.entity.PizzaCardEntity
+import com.yasunov.model.entity.PizzaEntity
 import com.yasunov.network.PizzaApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -10,23 +11,24 @@ import javax.inject.Inject
 
 class PizzaRepository @Inject constructor(
     private val api: PizzaApi,
-    private val converterDto: ConverterDto,
+    private val converterPizzaCardDto: ConverterPizzaCardDto,
+    private val converterPizzaModelDto: ConverterPizzaModelDto,
 ) {
-    suspend fun getPizzaList(): List<PizzaModel> {
+
+    suspend fun <T : Any> getPizzaList(converter: (PizzaEntity) -> T): List<T> {
         return api.getCatalog().catalog.map {
-            converterDto.asPizzaModel(it)
-        }
+            converterPizzaModelDto.asPizzaModel(it)
+        }.map { converter(it) }
     }
-//    todo исправить
-    fun getPizzaById(id: Int): Flow<PizzaCardModel?> {
+
+    fun <T : Any> getPizzaById(id: Int, converter: (PizzaCardEntity) -> T): Flow<T?> {
         return flow {
             val item = api.getCatalog().catalog.find { it.id.toInt() == id }
             if (item == null) {
                 emit(null)
                 return@flow
             }
-            emit(converterDto.asPizzaCardModel(item))
-
+            emit(converter(converterPizzaCardDto.asPizzaCardModel(item)))
         }
     }
 }

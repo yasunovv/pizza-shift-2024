@@ -13,7 +13,7 @@ pluginManagement {
 
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         mavenCentral()
         google()
@@ -24,7 +24,9 @@ include(":app")
 include(":core:common")
 include(":core:network")
 include(":core:designsystem")
-include(":core:model")
+include(":core:domain")
+include(":core:data")
 include(":feature:catalog")
 include(":feature:pizzacard")
-include(":core:data")
+include(":feature:cart")
+include(":feature:temp")

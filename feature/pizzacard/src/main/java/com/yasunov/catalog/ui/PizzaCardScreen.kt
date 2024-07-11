@@ -24,14 +24,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,8 +37,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.yasunov.catalog.entity.PizzaCardUiState
+import com.yasunov.catalog.model.PizzaCardUiState
 import com.yasunov.designsystem.component.PizzaTab
 import com.yasunov.designsystem.component.ShiftButton
 import com.yasunov.designsystem.component.ShiftScaffold
@@ -62,9 +58,9 @@ fun PizzaCardScreen(
     id: Int,
     modifier: Modifier = Modifier,
     onBackIconClicked: () -> Unit = {},
-    onButtonNextClicked: (Int) -> Unit = {},
+    onButtonNextClicked: () -> Unit = {},
 
-) {
+    ) {
     ShiftScaffold(
         topBar = {
             val painter = painterResource(AppIconsResource.ArrowLeft)
@@ -91,24 +87,25 @@ fun PizzaCardScreen(
         val viewModel = hiltViewModel<PizzaCardViewModel, PizzaCardViewModel.Factory>(
             creationCallback = { factory -> factory.create(id = id) }
         )
-        DisposableEffect(Unit) {
+        LaunchedEffect(Unit) {
             viewModel.loadPizzaCard()
-            onDispose { }
         }
-        val uiState by viewModel.uiState.collectAsState()
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         when (val value = uiState) {
             is PizzaCardUiState.Loading -> LoadingScreen(modifier = modifier.padding(paddingValues))
 
             is PizzaCardUiState.Success -> SuccessScreen(
                 viewModel = viewModel,
                 uiState = value,
-                padding = paddingValues
+                padding = paddingValues,
+                onButtonNextClicked = onButtonNextClicked
             )
 
             is PizzaCardUiState.Error -> ErrorScreen(
                 onClickButton = { viewModel.loadPizzaCard() },
                 modifier = modifier.padding(paddingValues)
             )
+            is PizzaCardUiState.Initial -> {}
         }
 
 
@@ -121,7 +118,6 @@ private fun SuccessScreen(
     uiState: PizzaCardUiState.Success,
     modifier: Modifier = Modifier,
     onButtonNextClicked: () -> Unit = {},
-    onIngredientCardClicked: (Int) -> Unit = {},
     padding: PaddingValues = PaddingValues(0.dp),
 ) {
     LazyColumn(
@@ -145,7 +141,7 @@ private fun SuccessScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = modifier.fillMaxWidth()
             ) {
-                val model = uiState.pizzaCard.img
+                val model = uiState.pizzaCardModel.img
                 AsyncImage(
                     model = model,
                     contentDescription = null,
@@ -155,14 +151,14 @@ private fun SuccessScreen(
             }
             Spacer(Modifier.height(32.dp))
             Text(
-                uiState.pizzaCard.name,
+                uiState.pizzaCardModel.name,
                 style = Typography.h5,
                 color = colors.titleText
             )
             Spacer(Modifier.height(8.dp))
 
             val ingredients =
-                uiState.pizzaCard.ingredients.joinToString(separator = ", ") { it.name }
+                uiState.pizzaCardModel.ingredientModels.joinToString(separator = ", ") { it.name }
             Text(
                 ingredients,
                 style = Typography.body1,
@@ -173,8 +169,8 @@ private fun SuccessScreen(
             Spacer(Modifier.height(24.dp))
         }
         item {
-            val sizes = uiState.pizzaCard.sizes.map { it.name }
-            val selected by rememberSaveable { mutableIntStateOf(uiState.selectedSize.id) }
+            val sizes = uiState.pizzaCardModel.sizeModels.map { it.name }
+            val selected = uiState.selectedSizeModel.id
             val integrationSource = remember { MutableInteractionSource() }
             PizzaTab(
                 tabTitles = sizes,
@@ -202,7 +198,7 @@ private fun SuccessScreen(
         item {
             Spacer(Modifier.height(16.dp))
         }
-        val toppingCardModelList = uiState.pizzaCard.toppings
+        val toppingCardModelList = uiState.pizzaCardModel.toppings
 
         gridItems(
             data = toppingCardModelList,
@@ -210,7 +206,8 @@ private fun SuccessScreen(
             key = { item -> item.id }
         ) { item ->
             val ingredientCardId = item.id
-            var isSelected by rememberSaveable { mutableStateOf(item.name in uiState.addedToppings) }
+            var isSelected = viewModel.checkSelectedTopping(item.name)
+
             val borderStroke: Dp by animateDpAsState(
                 targetValue = if (isSelected) 2.dp else 0.dp,
                 label = ""
@@ -236,9 +233,7 @@ private fun SuccessScreen(
                     )
                     .clickable(interactionSource = integrationSource,
                         indication = null,
-                        onClick = {
-                            onIngredientCardClicked(ingredientCardId)
-                        }),
+                        onClick = {}),
             )
 
         }

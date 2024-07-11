@@ -18,7 +18,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -47,10 +47,11 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(project(":core:model"))
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.compose.material)
 //    Coil
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
+    implementation(project(":core:domain"))
+
 }

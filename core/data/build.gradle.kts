@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-kapt")
     id ("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -18,7 +18,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -33,17 +33,20 @@ android {
         jvmTarget = "1.8"
     }
 }
-
+hilt {
+    enableAggregatingTask = true
+}
 dependencies {
 
     implementation(libs.androidx.core.ktx)
 
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.javax.inject)
-    implementation (libs.hilt.android)
-    kapt (libs.hilt.android.compiler)
+
     implementation(project(":core:network"))
     implementation(project(":core:common"))
-    implementation(project(":core:model"))
+    implementation(project(":core:domain"))
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
 }

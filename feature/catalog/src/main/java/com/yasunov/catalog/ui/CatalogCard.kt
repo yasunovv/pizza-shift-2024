@@ -18,14 +18,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.yasunov.catalog.entity.PizzaItemEntity
+import com.yasunov.catalog.model.PizzaItemModel
 import com.yasunov.designsystem.R
 import com.yasunov.designsystem.theme.ShiftAppInternTheme
 import com.yasunov.designsystem.theme.Typography
 
 @Composable
 fun PizzaItem(
-    pizzaCard: PizzaItemEntity,
+    pizzaCard: PizzaItemModel,
     onClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -75,7 +75,7 @@ fun PizzaItem(
 private fun PizzaItemPreview() {
     ShiftAppInternTheme {
         PizzaItem(
-            PizzaItemEntity(
+            PizzaItemModel(
                 id = 1,
                 imageSrc = "https://shift-backend.onrender.com/static/images/pizza/1.jpeg",
                 name = "ШИФТ Суприм",

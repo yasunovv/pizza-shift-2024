@@ -1,12 +1,14 @@
 package com.yasunov.catalog.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yasunov.catalog.entity.PizzaItemEntity
-import com.yasunov.catalog.entity.PizzaItemUiState
+import com.yasunov.catalog.converter.asPizzaItemModel
+import com.yasunov.catalog.model.PizzaItemUiState
 import com.yasunov.common.AppDispatchers
 import com.yasunov.data.PizzaRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,26 +23,21 @@ internal class CatalogViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _uiState: MutableStateFlow<PizzaItemUiState> =
-        MutableStateFlow(PizzaItemUiState.Loading)
+        MutableStateFlow(PizzaItemUiState.Initial)
     val uiState: StateFlow<PizzaItemUiState> get() = _uiState.asStateFlow()
 
     fun loadPizzaItem() {
-        viewModelScope.launch(dispatchers.default) {
+        if (_uiState.value is PizzaItemUiState.Loading || _uiState.value is PizzaItemUiState.Success) return
+        _uiState.update { PizzaItemUiState.Loading }
+        val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+            Log.d(TAG, "Coroutine loadPizzaCard was cancelled")
+            _uiState.update { PizzaItemUiState.Error }
+        }
+        viewModelScope.launch(dispatchers.default + exceptionHandler) {
             try {
-                val list = repository.getPizzaList()
-                    .map { pizzaModel ->
-                        PizzaItemEntity(
-                            id = pizzaModel.id,
-                            imageSrc = pizzaModel.imageSrc,
-                            name = pizzaModel.name,
-                            description = pizzaModel.desc,
-                            price = pizzaModel.price,
-                        )
-                    }
+                val list = repository.getPizzaList(::asPizzaItemModel)
                 _uiState.update {
-                    PizzaItemUiState.Success(
-                        list
-                    )
+                    PizzaItemUiState.Success(list = list)
                 }
             } catch (e: Exception) {
                 _uiState.update { PizzaItemUiState.Error }
@@ -48,6 +45,10 @@ internal class CatalogViewModel @Inject constructor(
 
         }
 
+    }
+
+    companion object {
+        private const val TAG = "CatalogViewModel"
     }
 
 }

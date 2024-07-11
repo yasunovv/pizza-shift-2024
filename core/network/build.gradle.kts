@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlinx.serialization)
-    id("kotlin-kapt")
     id ("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
 
 
 }
@@ -37,13 +37,15 @@ android {
         jvmTarget = "1.8"
     }
 }
-
+hilt {
+    enableAggregatingTask = true
+}
 dependencies {
     implementation(libs.material)
     // Network
     implementation(libs.retrofit)
     implementation(libs.retrofit.adapters.result)
-    debugImplementation(libs.logging.interceptor)
+    implementation(libs.logging.interceptor)
 //    KotlinX
     implementation (libs.converter.kotlinx.serialization)
     implementation(libs.kotlinx.serialiaztion.json)

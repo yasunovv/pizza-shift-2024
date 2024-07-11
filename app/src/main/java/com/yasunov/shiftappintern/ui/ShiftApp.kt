@@ -8,24 +8,33 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.yasunov.cart.navigation.CartDest
+import com.yasunov.cart.ui.CartScreen
 import com.yasunov.catalog.navigation.CatalogDest
 import com.yasunov.catalog.navigation.PizzaCardDest
 import com.yasunov.catalog.ui.CatalogScreen
 import com.yasunov.catalog.ui.PizzaCardScreen
 import com.yasunov.designsystem.component.ShiftScaffold
+import com.yasunov.temp.navigation.OrdersDest
+import com.yasunov.temp.navigation.ProfileDest
+import com.yasunov.temp.screen.OrdersScreen
+import com.yasunov.temp.screen.ProfileScreen
 
 
 @Composable
 fun ShiftApp(
     modifier: Modifier = Modifier
 ) {
-
+    val navController = rememberNavController()
     ShiftScaffold(
         bottomBar = {
-            BottomBar(modifier)
+            BottomBar(
+                navController = navController,
+                modifier = modifier
+            )
         }
     ) { padding ->
-        val navController = rememberNavController()
+
 
         Column(modifier.padding(padding)) {
             NavHost(navController = navController, startDestination = CatalogDest) {
@@ -42,10 +51,22 @@ fun ShiftApp(
                         id = pizzaCardDest.id,
                         onBackIconClicked = { navController.popBackStack() },
                         onButtonNextClicked = {
-                            navController.navigate(CatalogDest)
+                            navController.navigate(CartDest)
                         }
                     )
                 }
+                composable<CartDest> {
+                    CartScreen(onBackIconClicked = { navController.popBackStack() })
+                }
+                composable<OrdersDest> {
+                    OrdersScreen()
+                }
+                composable<ProfileDest> {
+                    ProfileScreen()
+                }
+
+
+
             }
         }
 

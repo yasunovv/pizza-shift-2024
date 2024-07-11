@@ -1,10 +1,9 @@
 package com.yasunov.data.conventer
 
-import com.yasunov.model.IngredientModel
-import com.yasunov.model.PizzaCardModel
-import com.yasunov.model.PizzaModel
-import com.yasunov.model.SizeModel
-import com.yasunov.model.ToppingModel
+import com.yasunov.model.entity.IngredientEntity
+import com.yasunov.model.entity.PizzaCardEntity
+import com.yasunov.model.entity.SizeEntity
+import com.yasunov.model.entity.ToppingEntity
 import com.yasunov.network.model.CatalogDTO
 import com.yasunov.network.model.IngredientDTO
 import com.yasunov.network.model.SizeDTO
@@ -12,20 +11,13 @@ import com.yasunov.network.model.ToppingDTO
 import javax.inject.Inject
 import javax.inject.Named
 
-class ConverterDto @Inject constructor(
+class ConverterPizzaCardDto @Inject constructor(
     @Named("BASE_URL")
     private val baseUrl: String,
-) {
-    internal fun asPizzaModel(catalogDTO: CatalogDTO): PizzaModel = PizzaModel(
-        id = catalogDTO.id.toInt(),
-        imageSrc = baseUrl + catalogDTO.img,
-        name = catalogDTO.name,
-        desc = catalogDTO.description,
-        price = catalogDTO.sizes[0].price
-    )
 
-    fun asPizzaCardModel(catalogDTO: CatalogDTO): PizzaCardModel {
-        return PizzaCardModel(
+    ) {
+    fun asPizzaCardModel(catalogDTO: CatalogDTO): PizzaCardEntity {
+        return PizzaCardEntity(
             id = catalogDTO.id.toInt(),
             description = catalogDTO.description,
             img = baseUrl + catalogDTO.img,
@@ -37,20 +29,20 @@ class ConverterDto @Inject constructor(
         )
     }
 
-    fun asIngredientsModelList(ingredientDTO: IngredientDTO): IngredientModel =
-        IngredientModel(
+    private fun asIngredientsModelList(ingredientDTO: IngredientDTO): IngredientEntity =
+        IngredientEntity(
             cost = ingredientDTO.cost,
             img = baseUrl + ingredientDTO.img,
-            name = ingredientConverter(ingredientDTO.name)
+            name = ingredientDTO.name
         )
 
-    fun asSizeModel(sizeDTO: SizeDTO): SizeModel = SizeModel(
-        name = sizeConverter(sizeDTO.name), price = sizeDTO.price
+    private fun asSizeModel(sizeDTO: SizeDTO): SizeEntity = SizeEntity(
+        name = sizeDTO.name, price = sizeDTO.price
     )
 
-    fun asToppingModel(toppingDTO: ToppingDTO): ToppingModel = ToppingModel(
+    private fun asToppingModel(toppingDTO: ToppingDTO): ToppingEntity = ToppingEntity(
         price = toppingDTO.cost,
         img = baseUrl + toppingDTO.img,
-        name = toppingConverter(toppingDTO.name)
+        name = toppingDTO.name
     )
 }

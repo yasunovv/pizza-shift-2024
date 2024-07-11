@@ -14,11 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,9 +31,8 @@ fun PizzaTab(
     onClickTabItem: (Int) -> Unit = {},
     selectedItem: Int = 0
 ) {
-    var selectedTabIndex by rememberSaveable { mutableIntStateOf(selectedItem) }
     TabRow(
-        selectedTabIndex = selectedTabIndex,
+        selectedTabIndex = selectedItem,
         backgroundColor = colors.secondary,
         contentColor = colors.bodyPrimaryText,
         indicator = {
@@ -52,8 +47,8 @@ fun PizzaTab(
             .padding(2.dp)
     ) {
         tabTitles.forEachIndexed { index, text ->
-            TabItem(text = text, selected = selectedTabIndex == index) {
-                selectedTabIndex = index
+            TabItem(text = text, selected = selectedItem == index) {
+
                 onClickTabItem(index)
             }
         }
